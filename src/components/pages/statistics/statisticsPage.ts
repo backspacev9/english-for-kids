@@ -1,10 +1,9 @@
-import { add, fill } from "lodash";
 import * as Constants from "../../../constants";
-import { sortAsc } from "../../../functions/sortAsc";
-import { sortDesc } from "../../../functions/sortDesc";
-import { strorageItems } from "../../../interface/strorageItems";
-import { Base } from "../../base";
-import { StatisticItem } from "./statisticsItem";
+import {sortAsc} from "../../../functions/sortAsc";
+import {sortDesc} from "../../../functions/sortDesc";
+import {strorageItems} from "../../../interface/strorageItems";
+import {Base} from "../../base";
+import {StatisticItem} from "./statisticsItem";
 import "./statisticsPage.scss";
 
 export class StatisticsPage extends Base {

@@ -1,40 +1,34 @@
-import * as Constants from "./constants";
-import { CardCategory } from "./interface/cardCategory";
+import {routPath, baseUrl} from "./constants";
+import {ICategory} from "./interface/category";
 export class Server {
   constructor() {}
 
   async getCardsByCategory(catIid: number) {
-    let response = await fetch(
-      `${Constants.baseUrl}${Constants.serverPath.cards}/${catIid}`
-    );
+    let response = await fetch(`${baseUrl}${routPath.cardsByCategory}/${catIid}`);
     let data = await response.json();
     // let totalItems = data.length;
     // console.log({ data, totalItems });
     return data;
   }
-  async getCategories(name?: string) {
-    let response = name
-      ? await fetch(
-          `${Constants.baseUrl}${Constants.serverPath.categories}/${name}`
-        )
-      : await fetch(`${Constants.baseUrl}${Constants.serverPath.categories}`);
+
+  async getCategories(id?: number) {
+    let response = id
+      ? await fetch(`${baseUrl}${routPath.categories}/${id}`)
+      : await fetch(`${baseUrl}${routPath.categories}`);
     let data = await response.json();
     //let totalItems = data.length;
     //console.log({ data, totalItems });
     return data;
   }
 
-  async updateCategory(par: CardCategory) {
-    const response = await fetch(
-      `${Constants.baseUrl}${Constants.serverPath.categories}/`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(par),
-      }
-    );
+  async updateCategory(par: ICategory) {
+    const response = await fetch(`${baseUrl}${routPath.categories}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(par),
+    });
     let data = await response.json();
     console.log("updated: ", data);
   }

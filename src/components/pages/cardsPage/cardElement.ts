@@ -1,40 +1,35 @@
-import { delay } from "../../../functions/delay";
-import { Base } from "../../base";
+import {delay} from "../../../functions/delay";
+import {Base} from "../../base";
 import * as Constants from "../../../constants";
-import { strorageItems } from "../../../interface/strorageItems";
+import {strorageItems} from "../../../interface/strorageItems";
+import {ICard} from "../../../interface/cards";
 
 export class CardElement extends Base {
-  private card = new Base("div", ["card"]);
+  private cardEl = new Base("div", ["card"]);
   private btnRotate = new Base("div", ["btnRotate"]);
   private isFlipped = false;
   private isPlay = false;
-  img: string;
-  word: string;
-  category: string;
-  traslate: string;
-  audio: string;
+  private card: ICard = null;
 
-  constructor(
-    img: string,
-    word: string,
-    category: string,
-    traslate: string,
-    audio: string
-  ) {
+  constructor(card: ICard) {
     super("div", ["cardContainer"]);
-    this.img = img;
-    this.word = word;
-    this.traslate = traslate;
-    this.audio = audio;
-    this.category = category;
-    this.card.element.insertAdjacentHTML(
+    const {id, word, translation, imagesrc, audiosrc, category_id} = card;
+    this.card = {
+      id: id,
+      word: word,
+      translation: translation,
+      imagesrc: imagesrc,
+      audiosrc: audiosrc,
+      category_id: category_id,
+    };
+    this.cardEl.element.insertAdjacentHTML(
       "afterbegin",
       `
-    <div class="frontside" style ="background-image: url('${this.img}')">
-      <div class="footerCard">${this.word}</div>
+    <div class="frontside" style ="background-image: url('${this.card.imagesrc}')">
+      <div class="footerCard">${this.card.word}</div>
     </div>
-    <div class="backside" style ="background-image: url('${this.img}')">
-      <div class="footerCard">${this.traslate}</div>
+    <div class="backside" style ="background-image: url('${this.card.imagesrc}')">
+      <div class="footerCard">${this.card.translation}</div>
     </div>
     `
     );
@@ -46,8 +41,8 @@ export class CardElement extends Base {
     </svg>
   `
     );
-    this.card.element.append(this.btnRotate.element);
-    this.element.append(this.card.element);
+    this.cardEl.element.append(this.btnRotate.element);
+    this.element.append(this.cardEl.element);
 
     this.btnRotate.element.addEventListener("click", async () => {
       this.flipFront();
@@ -58,32 +53,27 @@ export class CardElement extends Base {
         this.flipBack();
       }
     });
-    this.card.element.addEventListener("click", (e: Event) => {
+    this.cardEl.element.addEventListener("click", (e: Event) => {
       let target = <HTMLElement>e.target;
-      if (
-        Constants.statusGame.gameMode === "train" &&
-        target.classList.contains("frontside")
-      ) {
-        this.playAudio(this.audio);
+      if (Constants.statusGame.gameMode === "train" && target.classList.contains("frontside")) {
+        this.playAudio(this.card.audiosrc);
 
-        Constants.lsHadle.updateLocal(this.word, 1);
-        console.log("right: ", Constants.game.totalRight);
-        console.log("wrong: ", Constants.game.totalWrong);
+        Constants.lsHadle.updateLocal(this.card.word, 1);
       }
     });
   }
 
   hideFooter() {
-    let footers = this.card.element.querySelectorAll(".footerCard");
+    let footers = this.cardEl.element.querySelectorAll(".footerCard");
     footers.forEach((el) => {
       if (Constants.statusGame.gameMode === "play") {
         el.classList.add("hideFooter");
         this.btnRotate.element.classList.add("hideFooter");
-        this.card.element.classList.add("playModCard");
+        this.cardEl.element.classList.add("playModCard");
       } else {
         el.classList.remove("hideFooter");
         this.btnRotate.element.classList.remove("hideFooter");
-        this.card.element.classList.remove("playModCard");
+        this.cardEl.element.classList.remove("playModCard");
       }
     });
   }
@@ -91,8 +81,8 @@ export class CardElement extends Base {
   flipFront(): Promise<void> {
     return new Promise<void>((resolve) => {
       this.isFlipped = true;
-      this.card.element.classList.add("rotated");
-      this.card.element.addEventListener("transitionend", () => resolve(), {
+      this.cardEl.element.classList.add("rotated");
+      this.cardEl.element.addEventListener("transitionend", () => resolve(), {
         once: true,
       });
     });
@@ -100,7 +90,7 @@ export class CardElement extends Base {
 
   flipBack() {
     this.isFlipped = false;
-    this.card.element.classList.remove("rotated");
+    this.cardEl.element.classList.remove("rotated");
   }
 
   playAudio(path: string) {

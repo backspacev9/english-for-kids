@@ -1,8 +1,8 @@
-import { getCardsByCategoryName } from "../../../../functions/getCardsByName";
-import { Cards } from "../../../../interface/cards";
-import { Base } from "../../../base";
+import {getCardsByCategoryName} from "../../../../functions/getCardsByName";
+import {ICard} from "../../../../interface/cards";
+import {Base} from "../../../base";
 import "./wordAdmin.scss";
-import { WordAdminCard } from "./wordAdminCard";
+import {WordAdminCard} from "./wordAdminCard";
 
 export class WordAdmin extends Base {
   private cards: WordAdminCard[];
@@ -14,13 +14,13 @@ export class WordAdmin extends Base {
   async addWords(nameCategory: string) {
     console.log(nameCategory);
     this.cards = [];
-    let jsonCards: Cards[] = await getCardsByCategoryName(nameCategory);
+    let jsonCards: ICard[] = await getCardsByCategoryName(nameCategory);
 
-    jsonCards.forEach((el) => {
-      this.element.append(
-        new WordAdminCard(el.word, el.translation, el.audioSrc, el.image)
-          .element
-      );
-    });
+    // jsonCards.forEach((el) => {
+    //   this.element.append(
+    //     new WordAdminCard(el.word, el.translation, el.audioSrc, el.image)
+    //       .element
+    //   );
+    // });
   }
 }

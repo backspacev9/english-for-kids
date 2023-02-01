@@ -1,7 +1,7 @@
-import { Base } from "../base";
+import {Base} from "../base";
 import * as Constants from "../../constants";
 import "./rootContainer.scss";
-import { HandleAsideClose } from "../../functions/handleAsideClose";
+import {HandleAsideClose} from "../../functions/handleAsideClose";
 
 export class RootContainer extends Base {
   private ratingContainer = new Base("div", ["ratingContainer"]);
@@ -52,7 +52,7 @@ export class RootContainer extends Base {
   }
 
   updateBtnStart() {
-    console.log(Constants.currenPage.page);
+    // console.log(Constants.currenPage.page);
     if (
       Constants.statusGame.gameMode === "train" ||
       Constants.currenPage.page === Constants.pages.main ||

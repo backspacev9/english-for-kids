@@ -1,20 +1,25 @@
-import { Base } from "../../base";
-import * as Constants from "../../../constants";
+import {Base} from "../../base";
+import {pathIcons, currenPage, cardsPage, main} from "../../../constants";
 
 export class categoryCardElement extends Base {
-  private img = new Base("img");
-  private caption = new Base("span");
   private id: number;
   constructor(id: number, caption: string, img: string) {
     super("div", ["categoryCard"]);
     this.id = id;
-    this.img.element.setAttribute("src", img);
-    this.caption.element.append(caption);
-    this.element.append(this.img.element, this.caption.element);
+
+    this.element.insertAdjacentHTML(
+      "beforeend",
+      `
+      <div class="cat-imgContainer">
+        <img src="${img ? img : pathIcons.noImage}" style="${img ? "" : "width:50%; height:50%"}">
+      </div>
+      <span>${caption}</span>
+    `
+    );
     this.element.addEventListener("click", () => {
-      Constants.currenPage.page = caption;
-      Constants.cardsPage.addCards(caption);
-      Constants.main.insertPage(Constants.cardsPage.element);
+      currenPage.page = caption;
+      cardsPage.addCards(caption);
+      main.insertPage(cardsPage.element);
     });
   }
 }

@@ -1,9 +1,9 @@
-import { Base } from "../base";
+import {Base} from "../base";
 import * as Constants from "../../constants";
 import "./aside.scss";
-import { getCardsByCategoryName } from "../../functions/getCardsByName";
-import { ItemMenu } from "./itemMenu";
-import { CardCategory } from "../../interface/cardCategory";
+import {getCardsByCategoryName} from "../../functions/getCardsByName";
+import {ItemMenu} from "./itemMenu";
+import {ICategory} from "../../interface/category";
 
 export class Aside extends Base {
   private containerMenu = new Base("ul", ["containerMenu"]);
@@ -17,10 +17,7 @@ export class Aside extends Base {
   }
 
   init() {
-    this.containerMenu.element.append(
-      this.btnItemMenu.element,
-      this.btnStatistics.element
-    );
+    this.containerMenu.element.append(this.btnItemMenu.element, this.btnStatistics.element);
 
     this.element.append(this.containerMenu.element);
     this.containerMenu.element.after(this.btnLogin.element);
@@ -35,7 +32,7 @@ export class Aside extends Base {
 
   async addItemsMenu() {
     this.cardsArray = [];
-    let categories: CardCategory[] = await Constants.server.getCategories();
+    let categories: ICategory[] = await Constants.server.getCategories();
 
     categories.forEach((el) => {
       this.cardsArray.push(new ItemMenu(el.name));

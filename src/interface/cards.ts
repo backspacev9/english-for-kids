@@ -1,7 +1,8 @@
-export interface Cards {
+export interface ICard {
+  id: number;
   word: string;
   translation: string;
-  image: string;
-  audioSrc: string;
-  categoryId: number;
+  imagesrc: string;
+  audiosrc: string;
+  category_id: number;
 }

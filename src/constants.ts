@@ -1,21 +1,21 @@
-import { Header } from "./components/header/header";
-import { Main } from "./components/main/main";
-import { Aside } from "./components/aside/aside";
-import { CategoryPage } from "./components/pages/categoryPage/categoryPage";
-import { CardsPage } from "./components/pages/cardsPage/cardsPage";
-import { RootContainer } from "./components/rootContainer/rootContainer";
-import { ModalWindow } from "./components/modalWindow/modalWindow";
-import { WinningWindow } from "./components/modalWindow/winWindow";
-import { Game } from "./components/game";
-import { HandleLocalStorage } from "./components/handleLocalStorage";
-import { StatisticsPage } from "./components/pages/statisticks/statisticsPage";
-import { ModalLogin } from "./components/modalWindow/modalLogin";
-import { AdminMain } from "./components/admin/adminMain";
-import { AdminHeader } from "./components/admin/adminHeader";
-import { ContainerCardsAdmin } from "./components/admin/ContainerCards/containerCardsAdmin";
-import { CategoryAdmin } from "./components/admin/adminPages/categoryAdmin/categoryAdmin";
-import { WordAdmin } from "./components/admin/adminPages/wordAdmin/wordAdmin";
-import { Server } from "./server";
+import {Header} from "./components/header/header";
+import {Main} from "./components/main/main";
+import {Aside} from "./components/aside/aside";
+import {CategoryPage} from "./components/pages/categoryPage/categoryPage";
+import {CardsPage} from "./components/pages/cardsPage/cardsPage";
+import {RootContainer} from "./components/rootContainer/rootContainer";
+import {ModalWindow} from "./components/modalWindow/modalWindow";
+import {WinningWindow} from "./components/modalWindow/winWindow";
+import {Game} from "./components/game";
+import {HandleLocalStorage} from "./components/handleLocalStorage";
+import {StatisticsPage} from "./components/pages/statistics/statisticsPage";
+import {ModalLogin} from "./components/modalWindow/modalLogin";
+import {AdminMain} from "./components/admin/adminMain";
+import {AdminHeader} from "./components/admin/adminHeader";
+import {ContainerCardsAdmin} from "./components/admin/ContainerCards/containerCardsAdmin";
+import {CategoryAdmin} from "./components/admin/adminPages/categoryAdmin/categoryAdmin";
+import {WordAdmin} from "./components/admin/adminPages/wordAdmin/wordAdmin";
+import {Server} from "./server";
 
 export const path = {
   starWin: "./img/star-win.svg",
@@ -27,11 +27,21 @@ export const path = {
   wrongAnswer: "./audio/error.mp3",
   failSound: "./audio/failure.mp3",
   succesSound: "./audio/success.mp3",
-  cloudinaryImg: "https://res.cloudinary.com/dehcs7uhk/image/upload/",
-  cloudinaryAudio: "https://res.cloudinary.com/dehcs7uhk/video/upload/",
 };
-export const baseUrl = "http://127.0.0.1:3000/";
-export const serverPath = { cards: "cards", categories: "categories" };
+export const pathIcons = {
+  noImage: "./img/no-pictures.png",
+};
+//export const baseUrl = "http://127.0.0.1:3000/";
+export const baseUrl = "https://efk-api.onrender.com/";
+export const routPath = {
+  cards: "cards",
+  cardsByCategory: "cards/category",
+  categories: "categories",
+  images: "uploads/images",
+  audios: "uploads/audios",
+  vidios: "uploads/vidios",
+  uploads: "uploads",
+};
 
 export const statusGame = {
   gameMode: "train",
@@ -41,7 +51,7 @@ export const pages = {
   main: "Main Page",
   statistics: "Statistics",
 };
-export const currenPage = { page: "Main Page" };
+export const currenPage = {page: "Main Page"};
 export const DELAY_OF_MODAL = 3000;
 export const answerScore = 1;
 export const server = new Server();

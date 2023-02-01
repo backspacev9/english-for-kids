@@ -1,8 +1,8 @@
-import { CardCategory } from "../interface/cardCategory";
+import {ICategory} from "../interface/category";
 import * as Constants from "../constants";
 
 export async function getCardsByCategoryName(name: string) {
-  let categories: CardCategory[] = await Constants.server.getCategories();
+  let categories: ICategory[] = await Constants.server.getCategories();
   console.log(name + "\n" + categories);
   let id = categories.find((id) => id.name === name).id;
 

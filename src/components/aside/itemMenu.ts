@@ -1,6 +1,5 @@
-import { Base } from "../base";
+import {Base} from "../base";
 import * as Constants from "../../constants";
-import { CardsCategory } from "../../interface/cardsCategory";
 
 export class ItemMenu extends Base {
   tittle: string;

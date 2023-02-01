@@ -1,8 +1,8 @@
-import { Base } from "../../base";
-import { categoryCardElement } from "./categoryCardElement";
+import {Base} from "../../base";
+import {categoryCardElement} from "./categoryCardElement";
 import * as Constants from "../../../constants";
 import "./categoryPage.scss";
-import { CardCategory } from "../../../interface/cardCategory";
+import {ICategory} from "../../../interface/category";
 
 export class CategoryPage extends Base {
   private categoriesArray: categoryCardElement[] = [];
@@ -19,21 +19,11 @@ export class CategoryPage extends Base {
   async addCategory() {
     this.element.innerHTML = "";
     Constants.rootContainer.updateBtnStart();
-    let categories: CardCategory[] = await Constants.server.getCategories();
+    let categories: ICategory[] = await Constants.server.getCategories();
     categories.forEach((el) => {
-      this.categoriesArray.push(
-        new categoryCardElement(
-          el.id,
-          el.name,
-          Constants.path.cloudinaryImg.concat(el.image)
-        )
-      );
+      this.categoriesArray.push(new categoryCardElement(el.id, el.name, el.imagesrc));
     });
-    // cards.forEach((cat) => {
-    //   this.categoriesArray.push(
-    //     new categoryCardElement(cat.category.name, cat.category.immage)
-    //   );
-    // });
+
     this.categoriesArray.forEach((el) => {
       this.element.append(el.element);
     });

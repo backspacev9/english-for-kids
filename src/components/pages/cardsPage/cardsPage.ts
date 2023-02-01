@@ -1,53 +1,51 @@
 import * as Constants from "../../../constants";
-import { CardCategory } from "../../../interface/cardCategory";
-import { Cards } from "../../../interface/cards";
-import { Base } from "../../base";
-import { CardElement } from "./cardElement";
+import {ICategory} from "../../../interface/category";
+import {ICard} from "../../../interface/cards";
+import {Base} from "../../base";
+import {CardElement} from "./cardElement";
 import "./cardsPage.scss";
 
 export class CardsPage extends Base {
-  private cards: CardElement[] = [];
+  private cardsEl: CardElement[] = [];
   constructor() {
     super("div", ["cardField"]);
-    Constants.rootContainer.btnStartGame.element.addEventListener(
-      "click",
-      () => {
-        if (!Constants.statusGame.isGame) {
-          Constants.game.startGame(this.cards);
-          Constants.rootContainer.updateBtnStart();
-        } else {
-          Constants.game.playAudio();
-        }
+    Constants.rootContainer.btnStartGame.element.addEventListener("click", () => {
+      if (!Constants.statusGame.isGame) {
+        Constants.game.startGame(this.cardsEl);
+        Constants.rootContainer.updateBtnStart();
+      } else {
+        Constants.game.playAudio();
       }
-    );
+    });
   }
 
   async addCards(categoryName: string = "Emotions") {
     Constants.aside.updateList();
     this.clearField();
-    this.cards = [];
-    let categories: CardCategory[] = await Constants.server.getCategories();
+    this.cardsEl = [];
+    let categories: ICategory[] = await Constants.server.getCategories();
     let id = categories.find((id) => id.name === categoryName).id;
 
     //let jsonCards = await getCards();
-    let jsonCards: Cards[] = await Constants.server.getCardsByCategory(id);
+    let cards: ICard[] = await Constants.server.getCardsByCategory(id);
     // let data =
     //   jsonCards[jsonCards.findIndex((i) => i.category.name === categoryName)]
     //     .fields;
 
-    jsonCards.forEach((el) => {
-      this.cards.push(
-        new CardElement(
-          Constants.path.cloudinaryImg.concat(el.image),
-          el.word,
-          categoryName,
-          el.translation,
-          Constants.path.cloudinaryAudio.concat(el.audioSrc)
-        )
+    cards.forEach((el) => {
+      this.cardsEl.push(
+        new CardElement({
+          id: el.id,
+          word: el.word,
+          translation: el.translation,
+          imagesrc: el.imagesrc,
+          audiosrc: el.audiosrc,
+          category_id: el.category_id,
+        })
       );
     });
 
-    this.cards.forEach((card) => {
+    this.cardsEl.forEach((card) => {
       this.element.append(card.element);
     });
 
@@ -55,7 +53,7 @@ export class CardsPage extends Base {
   }
 
   gameModOn() {
-    this.cards.forEach((card) => {
+    this.cardsEl.forEach((card) => {
       card.hideFooter();
     });
   }
