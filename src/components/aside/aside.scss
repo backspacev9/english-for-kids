@@ -1,0 +1,52 @@
+aside {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    float: left;
+    height: 100vh;
+    width: 350px;
+    margin-left: -350px;
+    background: linear-gradient(180deg, #0099ae 0%, #00bf82 100%);
+    transition: 0.4s;
+}
+
+.activeAside {
+    margin-left: 0px;
+}
+
+.activePage {
+    text-decoration: underline;
+}
+
+.containerMenu {
+    color: white;
+    font-size: 24px;
+}
+
+.containerMenu li {
+    margin-top: 15px;
+    list-style-type: none;
+    cursor: pointer;
+}
+
+.btnItemLogin {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    bottom: 10px;
+    left: 40px;
+    width: 200px;
+    height: 50px;
+    //padding: 0 30px;
+    background-color: transparent;
+    color: white;
+    font-size: 20px;
+    border: 1px solid white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btnItemLogin:hover {
+    background-color: #ffffff59;
+}

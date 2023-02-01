@@ -1,0 +1,94 @@
+.modalRoot {
+    display: flex;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.25);
+    z-index: 10;
+}
+
+.winningContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    height: 90vh;
+    background-color: white;
+    color: #ff8080;
+    font-size: 30px;
+}
+
+.winningContent img {
+    margin-top: 20px;
+}
+
+.modalLogin {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color: #ffffffe8;
+    width: 40%;
+    box-shadow: -2px 4px 8px 0px rgba(34, 60, 80, 0.2);
+}
+
+.modalLogin h3 {
+    font-size: 42px;
+    font-weight: 500;
+    color: #2f2f2f;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 0 30px;
+    width: 80%;
+}
+
+.loginForm input {
+    border: none;
+    border-bottom: 1px solid rgb(59, 59, 59);
+    margin-block: 40px;
+    background: transparent;
+    font-size: 36px;
+    outline: none;
+}
+
+.btnContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #39b57c;
+    padding: 20px 0;
+    margin-top: 50px;
+}
+
+.btnContainer button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 50px;
+    color: white;
+    font-size: 16px;
+    border: 1px solid white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btnContainer button:nth-child(1) {
+    background-color: #ff8080;
+}
+
+.btnContainer button:nth-child(2) {
+    background-color: inherit;
+}
+
+.btnContainer button:hover {
+    filter: brightness(1.1);
+}
