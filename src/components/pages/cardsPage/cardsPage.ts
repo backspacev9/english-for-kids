@@ -6,9 +6,11 @@ import {CardElement} from "./cardElement";
 import "./cardsPage.scss";
 
 export class CardsPage extends Base {
+  private categoriId: number;
   private cardsEl: CardElement[] = [];
-  constructor() {
+  constructor(catId?: number) {
     super("div", ["cardField"]);
+    this.categoriId = catId;
     Constants.rootContainer.btnStartGame.element.addEventListener("click", () => {
       if (!Constants.statusGame.isGame) {
         Constants.game.startGame(this.cardsEl);
@@ -17,6 +19,7 @@ export class CardsPage extends Base {
         Constants.game.playAudio();
       }
     });
+    this.addCards();
   }
 
   async addCards(categoryName: string = "Emotions") {
@@ -27,7 +30,7 @@ export class CardsPage extends Base {
     let id = categories.find((id) => id.name === categoryName).id;
 
     //let jsonCards = await getCards();
-    let cards: ICard[] = await Constants.server.getCardsByCategory(id);
+    let cards: ICard[] = await Constants.server.getCardsByCategory(this.categoriId); //id
     // let data =
     //   jsonCards[jsonCards.findIndex((i) => i.category.name === categoryName)]
     //     .fields;

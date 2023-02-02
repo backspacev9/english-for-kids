@@ -4,6 +4,7 @@ import "./aside.scss";
 import {getCardsByCategoryName} from "../../functions/getCardsByName";
 import {ItemMenu} from "./itemMenu";
 import {ICategory} from "../../interface/category";
+import ItemMenuCategory from "./itemMenu-category";
 
 export class Aside extends Base {
   private containerMenu = new Base("ul", ["containerMenu"]);
@@ -35,10 +36,12 @@ export class Aside extends Base {
     let categories: ICategory[] = await Constants.server.getCategories();
 
     categories.forEach((el) => {
-      this.cardsArray.push(new ItemMenu(el.name));
+      this.cardsArray.push(new ItemMenuCategory(el));
     });
 
     this.cardsArray.forEach((el) => {
+      console.log(el.element);
+
       this.containerMenu.element.append(el.element);
     });
   }
