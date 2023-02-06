@@ -1,6 +1,7 @@
-import { setAttributes } from "../../functions/setAttributes";
-import * as Constants from "../../constants";
-import { Base } from "../base";
+import {modalWindow, rootContainer} from "../..";
+import {setAttributes} from "../../functions/setAttributes";
+
+import {Base} from "../base";
 
 export class ModalLogin extends Base {
   private lable = new Base("h3", [], "Login");
@@ -17,7 +18,7 @@ export class ModalLogin extends Base {
     this.init();
   }
   private init() {
-    setAttributes(this.form.element, { id: "loginForm" });
+    setAttributes(this.form.element, {id: "loginForm"});
     setAttributes(this.inputLogin.element, {
       type: "text",
       placeholder: "login",
@@ -32,25 +33,15 @@ export class ModalLogin extends Base {
     setAttributes(this.btnLogin.element, {
       form: "loginForm",
     });
-    this.form.element.append(
-      this.inputLogin.element,
-      this.inputPassword.element
-    );
-    this.btnContainer.element.append(
-      this.btnCandel.element,
-      this.btnLogin.element
-    );
-    this.element.append(
-      this.lable.element,
-      this.form.element,
-      this.btnContainer.element
-    );
+    this.form.element.append(this.inputLogin.element, this.inputPassword.element);
+    this.btnContainer.element.append(this.btnCandel.element, this.btnLogin.element);
+    this.element.append(this.lable.element, this.form.element, this.btnContainer.element);
     this.btnCandel.element.addEventListener("click", () => {
       this.element.remove();
-      Constants.modalWindow.close();
+      modalWindow.close();
     });
     this.btnLogin.element.addEventListener("click", () => {
-      Constants.rootContainer.initAdmin();
+      rootContainer.initAdmin();
     });
   }
 }

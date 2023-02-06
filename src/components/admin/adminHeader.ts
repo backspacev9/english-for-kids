@@ -1,5 +1,6 @@
-import { Base } from "../base";
-import * as Constants from "../../constants";
+import {rootContainer} from "../..";
+import {Base} from "../base";
+
 import "./admin.scss";
 
 export class AdminHeader extends Base {
@@ -10,13 +11,10 @@ export class AdminHeader extends Base {
 
   constructor() {
     super("div", ["adminHeader"]);
-    this.btnContainer.element.append(
-      this.btnCategories.element,
-      this.btnWords.element
-    );
+    this.btnContainer.element.append(this.btnCategories.element, this.btnWords.element);
     this.element.append(this.btnContainer.element, this.btnLogout.element);
     this.btnLogout.element.addEventListener("click", () => {
-      Constants.rootContainer.initElements();
+      rootContainer.initElements();
     });
   }
 }

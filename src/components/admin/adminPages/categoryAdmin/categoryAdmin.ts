@@ -1,8 +1,9 @@
 import {Base} from "../../../base";
 import "./categoryAdmin.scss";
-import * as Constants from "../../../../constants";
+
 import {ICategory} from "../../../../interface/category";
 import {CategoryAdminCard} from "./categoryAdminCard";
+import {server} from "../../../..";
 
 export class CategoryAdmin extends Base {
   private btnAddCategory = new Base("div", ["btnAddCategory"]);
@@ -22,7 +23,7 @@ export class CategoryAdmin extends Base {
   }
 
   async initCategories() {
-    let categories: ICategory[] = await Constants.server.getCategories();
+    let categories: ICategory[] = await server.getCategories();
     categories.forEach((el) => {
       this.element.append(new CategoryAdminCard(el, categories.length).element);
     });

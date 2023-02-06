@@ -1,5 +1,7 @@
 import {Base} from "../../base";
-import {pathIcons, currenPage, cardsPage, main} from "../../../constants";
+import {pathIcons, currenPage} from "../../../constants";
+import {main} from "../../..";
+import {CardsPage} from "../cardsPage/cardsPage";
 
 export class categoryCardElement extends Base {
   private id: number;
@@ -18,8 +20,8 @@ export class categoryCardElement extends Base {
     );
     this.element.addEventListener("click", () => {
       currenPage.page = caption;
-      cardsPage.addCards(caption);
-      main.insertPage(cardsPage.element);
+      //cardsPage.addCards(caption);
+      main.insertPage(new CardsPage(this.id).element);
     });
   }
 }

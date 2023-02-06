@@ -1,6 +1,9 @@
-import { Base } from "../base";
-import * as Constants from "../../constants";
-import { delay } from "../../functions/delay";
+import {Base} from "../base";
+
+import {delay} from "../../functions/delay";
+import {modalWindow, aside, rootContainer} from "../..";
+import {path, DELAY_OF_MODAL, currenPage} from "../../constants";
+//import {router} from "../router";
 
 export class WinningWindow extends Base {
   constructor() {
@@ -12,18 +15,19 @@ export class WinningWindow extends Base {
     if (errors) {
       var err = new Base("span", [], `${errors} errors`);
       var img = new Base("img");
-      img.element.setAttribute("src", Constants.path.failEnd);
+      img.element.setAttribute("src", path.failEnd);
     } else {
       var err = new Base("span", [], `Wins!`);
       var img = new Base("img");
-      img.element.setAttribute("src", Constants.path.successEnd);
+      img.element.setAttribute("src", path.successEnd);
     }
     this.element.append(err.element, img.element);
-    await delay(Constants.DELAY_OF_MODAL);
-    Constants.modalWindow.close();
-    Constants.main.insertPage(Constants.catPage.element);
-    Constants.currenPage.page = "Main Page";
-    Constants.aside.updateList();
-    Constants.rootContainer.updateBtnStart();
+    await delay(DELAY_OF_MODAL);
+    modalWindow.close();
+    //router.navigateTo("/");
+    // main.insertPage(catPage.element);
+    currenPage.page = "Main Page";
+    aside.updateList();
+    rootContainer.updateBtnStart();
   }
 }

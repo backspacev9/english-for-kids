@@ -1,6 +1,6 @@
-import { strorageItems } from "../interface/strorageItems";
-import * as Constants from "../constants";
-import { getCards } from "../functions/getCards";
+import {strorageItems} from "../interface/strorageItems";
+
+import {getCards} from "../functions/getCards";
 export class HandleLocalStorage {
   constructor() {
     this.checkFirstInit();
@@ -53,12 +53,7 @@ export class HandleLocalStorage {
     return words;
   }
 
-  updateLocal(
-    key: string,
-    clicks: number = 0,
-    correct: number = 0,
-    wrong: number = 0
-  ) {
+  updateLocal(key: string, clicks: number = 0, correct: number = 0, wrong: number = 0) {
     let data: strorageItems = this.getObject(key);
     let correct1 = data.correct + correct;
     let wrong1 = data.wrong + wrong;

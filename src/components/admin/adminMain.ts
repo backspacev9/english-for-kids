@@ -1,22 +1,19 @@
-import { Base } from "../base";
-import * as Constants from "../../constants";
+import {adminHeader, containerCardsAdmin} from "../..";
+import {Base} from "../base";
 
 export class AdminMain extends Base {
   private statusHeader = new Base("span", ["statusHeader"]);
   constructor() {
     super("div", ["adminMain"]);
     this.element.append(
-      Constants.adminHeader.element,
+      adminHeader.element,
       this.statusHeader.element,
-      Constants.containerCardsAdmin.element
+      containerCardsAdmin.element
     );
     this.setStatusHeader("");
   }
 
   setStatusHeader(text: string) {
-    this.statusHeader.element.insertAdjacentText(
-      "afterbegin",
-      `Category: ${text}`
-    );
+    this.statusHeader.element.insertAdjacentText("afterbegin", `Category: ${text}`);
   }
 }

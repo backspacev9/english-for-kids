@@ -1,7 +1,8 @@
 import {Base} from "../base";
-import * as Constants from "../../constants";
 import "./rootContainer.scss";
 import {HandleAsideClose} from "../../functions/handleAsideClose";
+import {adminMain, header, main} from "../..";
+import {path, statusGame, currenPage, pages} from "../../constants";
 
 export class RootContainer extends Base {
   private ratingContainer = new Base("div", ["ratingContainer"]);
@@ -22,27 +23,27 @@ export class RootContainer extends Base {
     this.updateBtnStart();
     HandleAsideClose();
     this.element.append(
-      Constants.header.element,
+      header.element,
       this.ratingContainer.element,
-      Constants.main.element,
+      main.element,
       this.btnStartGame.element
     );
   }
   initAdmin() {
     this.clearPage();
     this.element.classList.add("rootAdminActive");
-    this.element.append(Constants.adminMain.element);
+    this.element.append(adminMain.element);
     localStorage.setItem("isLoggedIn", "true");
   }
 
   addStar(isRight: boolean) {
     if (isRight) {
       let rStar = new Base("img", ["rightStar"]);
-      rStar.element.setAttribute("src", Constants.path.starWin);
+      rStar.element.setAttribute("src", path.starWin);
       this.ratingContainer.element.appendChild(rStar.element);
     } else {
       let wStar = new Base("img", ["wrongStar"]);
-      wStar.element.setAttribute("src", Constants.path.starLoose);
+      wStar.element.setAttribute("src", path.starLoose);
       this.ratingContainer.element.appendChild(wStar.element);
     }
   }
@@ -54,9 +55,9 @@ export class RootContainer extends Base {
   updateBtnStart() {
     // console.log(Constants.currenPage.page);
     if (
-      Constants.statusGame.gameMode === "train" ||
-      Constants.currenPage.page === Constants.pages.main ||
-      Constants.currenPage.page === Constants.pages.statistics
+      statusGame.gameMode === "train" ||
+      currenPage.page === pages.main ||
+      currenPage.page === pages.statistics
     ) {
       this.btnStartGame.element.classList.add("hideElement");
       this.ratingContainer.element.classList.add("hideElement");
@@ -65,11 +66,8 @@ export class RootContainer extends Base {
     this.btnStartGame.element.classList.remove("hideElement");
     this.ratingContainer.element.classList.remove("hideElement");
     this.btnStartGame.element.innerHTML = ``;
-    if (Constants.statusGame.isGame) {
-      this.btnStartGame.element.insertAdjacentHTML(
-        "afterbegin",
-        `<img src="${Constants.path.repeatBtn}">`
-      );
+    if (statusGame.isGame) {
+      this.btnStartGame.element.insertAdjacentHTML("afterbegin", `<img src="${path.repeatBtn}">`);
     } else {
       this.btnStartGame.element.innerText = `start`;
     }

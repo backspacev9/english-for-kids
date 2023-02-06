@@ -1,10 +1,11 @@
-import { Base } from "../../base";
+import {categoryAdmin} from "../../..";
+import {Base} from "../../base";
 import "./containerCardsAdmin.scss";
-import * as Constants from "../../../constants";
+
 export class ContainerCardsAdmin extends Base {
   constructor() {
     super("div", ["containerCardsAdmin"]);
-    this.insertPage(Constants.categoryAdmin.element);
+    this.insertPage(categoryAdmin.element);
   }
 
   private clear() {

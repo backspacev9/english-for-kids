@@ -1,5 +1,4 @@
 import {Base} from "../base";
-import * as Constants from "../../constants";
 import {CategoryPage} from "../pages/categoryPage/categoryPage";
 import {CardsPage} from "../pages/cardsPage/cardsPage";
 

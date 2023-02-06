@@ -1,6 +1,7 @@
 import {Base} from "../../../base";
-import * as Constants from "../../../../constants";
+
 import {ICategory} from "../../../../interface/category";
+import {containerCardsAdmin, wordAdmin, server} from "../../../..";
 export class CategoryAdminCard extends Base {
   private category: ICategory;
   private editMode = false;
@@ -17,7 +18,7 @@ export class CategoryAdminCard extends Base {
   constructor(category: ICategory, totalWords: number) {
     super("div", ["categoryAdminCard"]);
     this.category = category;
-    // this.element.style.backgroundImage = `url('${Constants.path.cloudinaryImg.concat(
+    // this.element.style.backgroundImage = `url('${path.cloudinaryImg.concat(
     //   this.category.imagesrc
     // )}')`;
     this.words = new Base("span", ["wordsCategory"], `WORDS: ${totalWords}`);
@@ -29,7 +30,7 @@ export class CategoryAdminCard extends Base {
     this.elementName.value = this.category.name;
     // this.categoryImg.element.setAttribute(
     //   "src",
-    //   `${Constants.path.cloudinaryImg.concat(this.category.imagesrc)}`
+    //   `${path.cloudinaryImg.concat(this.category.imagesrc)}`
     // );
     this.inputImg.type = "file";
     this.lableImg.element.append("Picture of category", this.inputImg, this.categoryImg.element);
@@ -52,8 +53,8 @@ export class CategoryAdminCard extends Base {
   }
 
   private addWord() {
-    Constants.containerCardsAdmin.insertPage(Constants.wordAdmin.element);
-    Constants.wordAdmin.addWords(this.category.name);
+    containerCardsAdmin.insertPage(wordAdmin.element);
+    wordAdmin.addWords(this.category.name);
   }
   private editCategory() {
     if (!this.editMode) {
@@ -78,6 +79,6 @@ export class CategoryAdminCard extends Base {
       imagesrc: "category/fileName.jpg",
     };
 
-    await Constants.server.updateCategory(updateCategory);
+    await server.updateCategory(updateCategory);
   }
 }

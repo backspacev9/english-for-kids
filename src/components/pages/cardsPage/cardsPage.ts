@@ -1,9 +1,10 @@
-import * as Constants from "../../../constants";
 import {ICategory} from "../../../interface/category";
 import {ICard} from "../../../interface/cards";
 import {Base} from "../../base";
 import {CardElement} from "./cardElement";
 import "./cardsPage.scss";
+import {aside, header, rootContainer, server} from "../../..";
+import {statusGame} from "../../../constants";
 
 export class CardsPage extends Base {
   private categoriId: number;
@@ -11,26 +12,42 @@ export class CardsPage extends Base {
   constructor(catId?: number) {
     super("div", ["cardField"]);
     this.categoriId = catId;
-    Constants.rootContainer.btnStartGame.element.addEventListener("click", () => {
-      if (!Constants.statusGame.isGame) {
-        Constants.game.startGame(this.cardsEl);
-        Constants.rootContainer.updateBtnStart();
-      } else {
-        Constants.game.playAudio();
-      }
-    });
+    // rootContainer.btnStartGame.element.addEventListener("click", () => {
+    //   if (!statusGame.isGame) {
+    //     game.startGame(this.cardsEl);
+    //     rootContainer.updateBtnStart();
+    //   } else {
+    //     game.playAudio();
+    //   }
+    // });
     this.addCards();
+    header.inputSwitcher.addEventListener("input", (e) => {
+      header.statusSwitcher.element.innerHTML = "";
+      if (header.inputSwitcher.checked) {
+        header.statusSwitcher.element.classList.remove("statusActive");
+        header.statusSwitcher.element.innerText = "train";
+        statusGame.gameMode = "train";
+      } else {
+        header.statusSwitcher.element.classList.add("statusActive");
+        header.statusSwitcher.element.innerText = "play";
+        statusGame.gameMode = "play";
+      }
+      // catPage.changeState();
+      //router.navigateTo("/");
+      this.gameModOn();
+      rootContainer.updateBtnStart();
+    });
   }
 
   async addCards(categoryName: string = "Emotions") {
-    Constants.aside.updateList();
+    aside.updateList();
     this.clearField();
     this.cardsEl = [];
-    let categories: ICategory[] = await Constants.server.getCategories();
+    let categories: ICategory[] = await server.getCategories();
     let id = categories.find((id) => id.name === categoryName).id;
 
     //let jsonCards = await getCards();
-    let cards: ICard[] = await Constants.server.getCardsByCategory(this.categoriId); //id
+    let cards: ICard[] = await server.getCardsByCategory(this.categoriId); //id
     // let data =
     //   jsonCards[jsonCards.findIndex((i) => i.category.name === categoryName)]
     //     .fields;

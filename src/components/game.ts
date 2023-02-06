@@ -1,6 +1,8 @@
-import * as Constants from "../constants";
+import {modalWindow, winWindow, rootContainer, audio} from "..";
+import {statusGame, path} from "../constants";
 import {delay} from "../functions/delay";
 import {CardElement} from "./pages/cardsPage/cardElement";
+//import {router} from "./router";
 
 export class Game {
   private audios: string[] = [];
@@ -23,7 +25,7 @@ export class Game {
   }
 
   async startGame(cards: CardElement[]) {
-    //   Constants.statusGame.isGame = true;
+    //   statusGame.isGame = true;
     //   this.clearData();
     //   this.arrCardsEl = cards;
     //   cards.forEach((el) => {
@@ -42,25 +44,26 @@ export class Game {
   }
 
   endGame(isForceExit: boolean = false) {
-    Constants.statusGame.isGame = false;
+    statusGame.isGame = false;
 
     if (isForceExit == false) {
-      Constants.main.insertPage(Constants.catPage.element);
-      Constants.modalWindow.insertContent(Constants.winWindow.element);
+      //main.insertPage(catPage.element);
+      //router.navigateTo("/");
+      modalWindow.insertContent(winWindow.element);
       if (this.totalWrong > 0) {
-        Constants.winWindow.showWinModal(this.totalWrong);
-        this.playAudio(Constants.path.failSound);
+        winWindow.showWinModal(this.totalWrong);
+        this.playAudio(path.failSound);
       } else {
-        Constants.winWindow.showWinModal();
-        this.playAudio(Constants.path.succesSound);
+        winWindow.showWinModal();
+        this.playAudio(path.succesSound);
       }
-      Constants.rootContainer.element.append(Constants.modalWindow.element);
+      rootContainer.element.append(modalWindow.element);
     }
 
-    Constants.rootContainer.clearRating();
-    Constants.rootContainer.updateBtnStart();
+    rootContainer.clearRating();
+    rootContainer.updateBtnStart();
     // this.arrCards.forEach((el) => {
-    //   Constants.lsHadle.setPercent(el.word);
+    //   lsHadle.setPercent(el.word);
     // });
   }
 
@@ -68,10 +71,10 @@ export class Game {
   //   return new Promise<void>(async (resolve) => {
   //     this.currentWord = card.word;
   //     if (card.audio === this.currentAudio) {
-  //       this.playAudio(Constants.path.rightAnswer);
+  //       this.playAudio(path.rightAnswer);
   //       card.element.classList.add("disabled");
-  //       Constants.rootContainer.addStar(true);
-  //       Constants.lsHadle.updateLocal(card.word, 0, Constants.answerScore, 0);
+  //       rootContainer.addStar(true);
+  //       lsHadle.updateLocal(card.word, 0, answerScore, 0);
   //       this.totalRight++;
   //       this.counter++;
   //       await delay(1000);
@@ -82,9 +85,9 @@ export class Game {
   //       }
   //     } else {
   //       this.totalWrong++;
-  //       this.playAudio(Constants.path.wrongAnswer);
-  //       Constants.rootContainer.addStar(false);
-  //       Constants.lsHadle.updateLocal(card.word, 0, 0, Constants.answerScore);
+  //       this.playAudio(path.wrongAnswer);
+  //       rootContainer.addStar(false);
+  //       lsHadle.updateLocal(card.word, 0, 0, answerScore);
   //     }
   //     resolve();
   //     this.isProgress = false;
@@ -92,13 +95,13 @@ export class Game {
   // }
 
   async playAudio(src?: string) {
-    Constants.audio.currentTime = 0;
+    audio.currentTime = 0;
     this.currentAudio = this.audios[this.counter];
     if (src) {
-      Constants.audio.src = src;
+      audio.src = src;
     } else {
-      Constants.audio.src = this.currentAudio;
+      audio.src = this.currentAudio;
     }
-    Constants.audio.play();
+    audio.play();
   }
 }

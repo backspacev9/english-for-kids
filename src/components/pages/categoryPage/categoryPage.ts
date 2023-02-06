@@ -1,8 +1,9 @@
 import {Base} from "../../base";
 import {categoryCardElement} from "./categoryCardElement";
-import * as Constants from "../../../constants";
+import {currenPage, pages} from "../../../constants";
 import "./categoryPage.scss";
 import {ICategory} from "../../../interface/category";
+import {rootContainer, server} from "../../..";
 
 export class CategoryPage extends Base {
   private categoriesArray: categoryCardElement[] = [];
@@ -12,14 +13,15 @@ export class CategoryPage extends Base {
   }
 
   async init() {
-    Constants.currenPage.page = Constants.pages.main;
+    currenPage.page = pages.main;
     await this.addCategory();
+    console.log("cat page");
   }
 
   async addCategory() {
     this.element.innerHTML = "";
-    Constants.rootContainer.updateBtnStart();
-    let categories: ICategory[] = await Constants.server.getCategories();
+    rootContainer.updateBtnStart();
+    let categories: ICategory[] = await server.getCategories();
     categories.forEach((el) => {
       this.categoriesArray.push(new categoryCardElement(el.id, el.name, el.imagesrc));
     });

@@ -1,8 +1,11 @@
 import {delay} from "../../../functions/delay";
 import {Base} from "../../base";
-import * as Constants from "../../../constants";
+
 import {strorageItems} from "../../../interface/strorageItems";
 import {ICard} from "../../../interface/cards";
+import {lsHadle, audio} from "../../..";
+import {statusGame} from "../../../constants";
+import {CardsPage} from "./cardsPage";
 
 export class CardElement extends Base {
   private cardEl = new Base("div", ["card"]);
@@ -47,7 +50,7 @@ export class CardElement extends Base {
     this.btnRotate.element.addEventListener("click", async () => {
       this.flipFront();
     });
-    Constants.cardsPage.element.addEventListener("mouseover", (e: Event) => {
+    CardsPage.element.addEventListener("mouseover", (e: Event) => {
       let target = <HTMLElement>e.target;
       if (target.classList.contains("cardField")) {
         this.flipBack();
@@ -55,10 +58,10 @@ export class CardElement extends Base {
     });
     this.cardEl.element.addEventListener("click", (e: Event) => {
       let target = <HTMLElement>e.target;
-      if (Constants.statusGame.gameMode === "train" && target.classList.contains("frontside")) {
+      if (statusGame.gameMode === "train" && target.classList.contains("frontside")) {
         this.playAudio(this.card.audiosrc);
 
-        Constants.lsHadle.updateLocal(this.card.word, 1);
+        lsHadle.updateLocal(this.card.word, 1);
       }
     });
   }
@@ -66,7 +69,7 @@ export class CardElement extends Base {
   hideFooter() {
     let footers = this.cardEl.element.querySelectorAll(".footerCard");
     footers.forEach((el) => {
-      if (Constants.statusGame.gameMode === "play") {
+      if (statusGame.gameMode === "play") {
         el.classList.add("hideFooter");
         this.btnRotate.element.classList.add("hideFooter");
         this.cardEl.element.classList.add("playModCard");
@@ -94,8 +97,8 @@ export class CardElement extends Base {
   }
 
   playAudio(path: string) {
-    Constants.audio.currentTime = 0;
-    Constants.audio.src = `${path}`;
-    Constants.audio.play();
+    audio.currentTime = 0;
+    audio.src = `${path}`;
+    audio.play();
   }
 }
