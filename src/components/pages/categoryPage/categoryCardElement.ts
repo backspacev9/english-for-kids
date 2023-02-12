@@ -6,9 +6,9 @@ import {CardsPage} from "../cardsPage/cardsPage";
 export class categoryCardElement extends Base {
   private id: number;
   constructor(id: number, caption: string, img: string) {
-    super("div", ["categoryCard"]);
+    super("a", ["categoryCard"]);
     this.id = id;
-
+    this.element.setAttribute('href', `/category?id=${id}`)
     this.element.insertAdjacentHTML(
       "beforeend",
       `

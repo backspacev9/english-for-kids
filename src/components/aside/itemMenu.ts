@@ -4,12 +4,16 @@ import {CardsPage} from "../pages/cardsPage/cardsPage";
 
 export class ItemMenu extends Base {
   tittle: string;
-
+  private link:Base;
+  id:number;
   private categoriesName: string[] = [];
-  constructor(tittle?: string) {
-    super("li", ["ItemMenu"], tittle);
+  constructor(tittle: string, link?:string, id?:number) {
+    super("li", ["ItemMenu"]);
     this.tittle = tittle;
-
+    this.id = id;
+    this.link = new Base('a',['link'],tittle)
+    this.link.element.setAttribute('href', link)
+    this.element.append(this.link.element)
     // this.element.addEventListener("click", () => {
     //   Constants.currenPage.page = this.tittle;
 

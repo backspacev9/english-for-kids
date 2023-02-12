@@ -50,12 +50,7 @@ export class CardElement extends Base {
     this.btnRotate.element.addEventListener("click", async () => {
       this.flipFront();
     });
-    CardsPage.element.addEventListener("mouseover", (e: Event) => {
-      let target = <HTMLElement>e.target;
-      if (target.classList.contains("cardField")) {
-        this.flipBack();
-      }
-    });
+
     this.cardEl.element.addEventListener("click", (e: Event) => {
       let target = <HTMLElement>e.target;
       if (statusGame.gameMode === "train" && target.classList.contains("frontside")) {

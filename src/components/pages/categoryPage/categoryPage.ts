@@ -3,29 +3,31 @@ import {categoryCardElement} from "./categoryCardElement";
 import {currenPage, pages} from "../../../constants";
 import "./categoryPage.scss";
 import {ICategory} from "../../../interface/category";
-import {rootContainer, server} from "../../..";
+import {main, rootContainer, server} from "../../..";
+import Loading from "../../loading";
 
 export class CategoryPage extends Base {
   private categoriesArray: categoryCardElement[] = [];
+  private loadingEl = new Loading("loading categories..");
   constructor() {
     super("div", ["categoryPage"]);
     this.init();
   }
 
   async init() {
-    currenPage.page = pages.main;
     await this.addCategory();
-    console.log("cat page");
   }
 
   async addCategory() {
     this.element.innerHTML = "";
+
+    this.element.append(this.loadingEl.element);
     rootContainer.updateBtnStart();
     let categories: ICategory[] = await server.getCategories();
     categories.forEach((el) => {
       this.categoriesArray.push(new categoryCardElement(el.id, el.name, el.imagesrc));
     });
-
+    this.loadingEl.element.remove();
     this.categoriesArray.forEach((el) => {
       this.element.append(el.element);
     });

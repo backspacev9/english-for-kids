@@ -3,35 +3,29 @@ import "./aside.scss";
 import {getCardsByCategoryName} from "../../functions/getCardsByName";
 import {ItemMenu} from "./itemMenu";
 import {ICategory} from "../../interface/category";
-import ItemMenuCategory from "./itemMenu-category";
-import router, {HTMLElementEvent} from "../router";
+//import ItemMenuCategory from "./itemMenu-category";
+
 import {modalLogin, modalWindow, rootContainer, server} from "../..";
-import {currenPage, pages} from "../../constants";
 
 export class Aside extends Base {
   private containerMenu = new Base("ul", ["containerMenu"]);
-  private btnItemMenu = new ItemMenu("Main Page");
-  private btnStatistics = new ItemMenu("Statistics");
+  private btnItemMenu = new ItemMenu("Main Page","/");
+  private btnStatistics = new ItemMenu("Statistics","/statistics");
   private btnLogin = new Base("button", ["btnItemLogin"], "Login");
   private cardsArray: ItemMenu[] = [];
-  private link = new Base("a", [], "asdasdsad");
   constructor() {
     super("aside");
     this.init();
   }
 
-  init() {
+  async init() {
     this.containerMenu.element.append(this.btnItemMenu.element, this.btnStatistics.element);
-    this.link.element.setAttribute("href", `category`);
+
     this.element.append(this.containerMenu.element);
     this.containerMenu.element.after(this.btnLogin.element);
-    this.addItemsMenu();
+    await this.addItemsMenu();
     this.updateList();
 
-    this.link.element.addEventListener("load", (ev) => {
-      const event = ev as HTMLElementEvent<HTMLLinkElement>;
-      router(event);
-    });
 
     this.btnLogin.element.addEventListener("click", () => {
       modalWindow.insertContent(modalLogin.element);
@@ -44,41 +38,45 @@ export class Aside extends Base {
     let categories: ICategory[] = await server.getCategories();
 
     categories.forEach((el) => {
-      this.cardsArray.push(new ItemMenuCategory(el));
+      this.cardsArray.push(new ItemMenu(el.name,`/category?id=${el.id}`,el.id));
     });
 
     this.cardsArray.forEach((el) => {
-      console.log(el.element);
-
       this.containerMenu.element.append(el.element);
     });
-    this.containerMenu.element.append(this.link.element);
+   
   }
 
   hideAside() {
     //toogle
-    if (this.element.classList.contains("activeAside")) {
+  if (this.element.classList.contains("activeAside")) {
       this.element.classList.remove("activeAside");
     }
+ 
   }
 
-  updateList() {
+  public updateList() {
+    const id = Number(new URLSearchParams(window.location.search).get('id'))
+    console.log(id);
+    
     this.btnItemMenu.element.classList.remove("activePage");
     this.btnStatistics.element.classList.remove("activePage");
-    switch (currenPage.page) {
-      case pages.main:
+
+    switch (window.location.pathname) {
+      case '/':
         this.btnItemMenu.element.classList.add("activePage");
         break;
-      case pages.statistics:
+      case '/statistics':
         this.btnStatistics.element.classList.add("activePage");
         break;
     }
 
     this.cardsArray.forEach((el) => {
-      if (el.tittle === currenPage.page) {
+      
+      if (el.id === id) {
         el.element.classList.add("activePage");
       } else {
-        el.element.classList.remove("activePage");
+       el.element.classList.remove("activePage");
       }
     });
 

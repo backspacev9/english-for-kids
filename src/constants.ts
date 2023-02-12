@@ -20,7 +20,7 @@ export const routPath = {
   categories: "categories",
   images: "uploads/images",
   audios: "uploads/audios",
-  vidios: "uploads/vidios",
+  videos: "uploads/vidios",
   uploads: "uploads",
 };
 
