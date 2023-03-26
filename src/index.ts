@@ -19,7 +19,7 @@ import {WinningWindow} from "./components/modalWindow/winWindow";
 import {CardsPage} from "./components/pages/cardsPage/cardsPage";
 import {StatisticsPage} from "./components/pages/statistics/statisticsPage";
 import {Server} from "./server";
-import NotFoundPage from './components/pages/notFound';
+import NotFoundPage from "./components/pages/notFound";
 export const server = new Server();
 export const wordAdmin = new WordAdmin();
 export const categoryAdmin = new CategoryAdmin();
@@ -47,14 +47,8 @@ window.onload = () => {
   //main.insertPage(new CategoryPage().element);
 };
 
-const getParamsId = () => Number(new URLSearchParams(window.location.search).get('id'))
-
-const routes = {
-  404: new NotFoundPage().element,
-  "/": new CategoryPage().element,
-  "/category": getParamsId() ?  new CardsPage(getParamsId()).element : new NotFoundPage("params require").element,
-  "/statistics": new StatisticsPage().element,
-};
+const getParamsId = () =>
+  window.location.hash ? Number(window.location.hash.match(/[^\id=]\d*$/g)[0]) : null;
 
 // const router = () => {
 //   ev.preventDefault();
@@ -64,14 +58,27 @@ const routes = {
 // };
 
 const handleLocation = async () => {
-  const path: string = window.location.pathname;
+  const routes = {
+    404: new NotFoundPage().element,
+    "/": new CategoryPage().element,
+    category: getParamsId()
+      ? new CardsPage(getParamsId()).element
+      : new NotFoundPage("params require").element,
+    statistics: new StatisticsPage().element,
+  };
+  console.log(window.location.hash);
+
+  const path: string = window.location.hash.replace(/\#|\?.+/g, "");
   console.log(path);
-  const route = routes[path as keyof typeof routes] || routes[404];
+  console.log(getParamsId());
+
+  const route = path.length > 0 ? routes[path as keyof typeof routes] : routes["/"] || routes[404];
+  console.log(route);
+
   main.insertPage(route);
- 
 };
 
-window.onpopstate = handleLocation;
+window.onhashchange = handleLocation;
 handleLocation();
 
 //export default handleLocation;
