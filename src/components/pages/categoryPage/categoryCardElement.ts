@@ -8,7 +8,7 @@ export class categoryCardElement extends Base {
   constructor(id: number, caption: string, img: string) {
     super("a", ["categoryCard"]);
     this.id = id;
-    this.element.setAttribute('href', `/category?id=${id}`)
+    this.element.setAttribute("href", `/#category?id=${id}`);
     this.element.insertAdjacentHTML(
       "beforeend",
       `

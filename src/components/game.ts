@@ -1,5 +1,5 @@
 import {modalWindow, winWindow, rootContainer, audio} from "..";
-import {statusGame, path} from "../constants";
+import {statusGame, FilePath} from "../constants";
 import {delay} from "../functions/delay";
 import {CardElement} from "./pages/cardsPage/cardElement";
 //import {router} from "./router";
@@ -52,10 +52,10 @@ export class Game {
       modalWindow.insertContent(winWindow.element);
       if (this.totalWrong > 0) {
         winWindow.showWinModal(this.totalWrong);
-        this.playAudio(path.failSound);
+        this.playAudio(FilePath.failSound);
       } else {
         winWindow.showWinModal();
-        this.playAudio(path.succesSound);
+        this.playAudio(FilePath.succesSound);
       }
       rootContainer.element.append(modalWindow.element);
     }

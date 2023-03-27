@@ -2,7 +2,7 @@ import {Base} from "../base";
 import "./rootContainer.scss";
 import {HandleAsideClose} from "../../functions/handleAsideClose";
 import {adminMain, header, main} from "../..";
-import {path, statusGame, currenPage, pages} from "../../constants";
+import {FilePath, statusGame, currenPage, pages} from "../../constants";
 
 export class RootContainer extends Base {
   private ratingContainer = new Base("div", ["ratingContainer"]);
@@ -39,11 +39,11 @@ export class RootContainer extends Base {
   addStar(isRight: boolean) {
     if (isRight) {
       let rStar = new Base("img", ["rightStar"]);
-      rStar.element.setAttribute("src", path.starWin);
+      rStar.element.setAttribute("src", FilePath.starWin);
       this.ratingContainer.element.appendChild(rStar.element);
     } else {
       let wStar = new Base("img", ["wrongStar"]);
-      wStar.element.setAttribute("src", path.starLoose);
+      wStar.element.setAttribute("src", FilePath.starLoose);
       this.ratingContainer.element.appendChild(wStar.element);
     }
   }
@@ -67,7 +67,10 @@ export class RootContainer extends Base {
     this.ratingContainer.element.classList.remove("hideElement");
     this.btnStartGame.element.innerHTML = ``;
     if (statusGame.isGame) {
-      this.btnStartGame.element.insertAdjacentHTML("afterbegin", `<img src="${path.repeatBtn}">`);
+      this.btnStartGame.element.insertAdjacentHTML(
+        "afterbegin",
+        `<img src="${FilePath.repeatBtn}">`
+      );
     } else {
       this.btnStartGame.element.innerText = `start`;
     }

@@ -1,4 +1,4 @@
-export const path = {
+export const FilePath = {
   starWin: "./img/star-win.svg",
   starLoose: "./img/star.svg",
   repeatBtn: "./img/repeat.svg",

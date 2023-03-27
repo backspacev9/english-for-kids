@@ -20,6 +20,7 @@ import {CardsPage} from "./components/pages/cardsPage/cardsPage";
 import {StatisticsPage} from "./components/pages/statistics/statisticsPage";
 import {Server} from "./server";
 import NotFoundPage from "./components/pages/notFound";
+import {FilePath} from "./constants";
 export const server = new Server();
 export const wordAdmin = new WordAdmin();
 export const categoryAdmin = new CategoryAdmin();
@@ -50,13 +51,6 @@ window.onload = () => {
 const getParamsId = () =>
   window.location.hash ? Number(window.location.hash.match(/[^\id=]\d*$/g)[0]) : null;
 
-// const router = () => {
-//   ev.preventDefault();
-//   const link = ev.target.href;
-//   window.history.pushState({}, "", link);
-//   handleLocation();
-// };
-
 const handleLocation = async () => {
   const routes = {
     404: new NotFoundPage().element,
@@ -66,15 +60,18 @@ const handleLocation = async () => {
       : new NotFoundPage("params require").element,
     statistics: new StatisticsPage().element,
   };
-  console.log(window.location.hash);
 
-  const path: string = window.location.hash.replace(/\#|\?.+/g, "");
-  console.log(path);
-  console.log(getParamsId());
+  const pathname = window.location.pathname;
+  const hash = window.location.hash;
+  const locationPath: string = hash.replace(/\#|\?.+/g, "");
+  // console.log(path);
 
-  const route = path.length > 0 ? routes[path as keyof typeof routes] : routes["/"] || routes[404];
-  console.log(route);
-
+  const route =
+    locationPath.length > 0
+      ? routes[locationPath as keyof typeof routes] || routes[404]
+      : pathname === "/"
+      ? routes["/"]
+      : routes[404];
   main.insertPage(route);
 };
 
