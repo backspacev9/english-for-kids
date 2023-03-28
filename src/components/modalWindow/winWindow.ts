@@ -15,11 +15,11 @@ export class WinningWindow extends Base {
     if (errors) {
       var err = new Base("span", [], `${errors} errors`);
       var img = new Base("img");
-      img.element.setAttribute("src", FilePath.failEnd);
+      img.element.setAttribute("src", FilePath.failSound);
     } else {
       var err = new Base("span", [], `Wins!`);
       var img = new Base("img");
-      img.element.setAttribute("src", FilePath.successEnd);
+      img.element.setAttribute("src", FilePath.succesSound);
     }
     this.element.append(err.element, img.element);
     await delay(DELAY_OF_MODAL);

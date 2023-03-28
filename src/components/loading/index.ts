@@ -1,3 +1,4 @@
+import {IconsPath} from "../../constants";
 import {Base} from "../base";
 import "./index.scss";
 
@@ -16,7 +17,7 @@ class Loading extends Base {
     this.loadingEl.element.insertAdjacentHTML(
       "afterbegin",
       `
-      <img src="./loading.svg">
+      <img src="${IconsPath.loading}">
     `
     );
   }

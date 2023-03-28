@@ -1,5 +1,5 @@
 import {Base} from "../../base";
-import {pathIcons, currenPage} from "../../../constants";
+import {IconsPath, currenPage} from "../../../constants";
 import {main} from "../../..";
 import {CardsPage} from "../cardsPage/cardsPage";
 
@@ -13,7 +13,7 @@ export class categoryCardElement extends Base {
       "beforeend",
       `
       <div class="cat-imgContainer">
-        <img src="${img ? img : pathIcons.noImage}" style="${img ? "" : "width:50%; height:50%"}">
+        <img src="${img ? img : IconsPath.noImage}" style="${img ? "" : "width:50%; height:50%"}">
       </div>
       <span>${caption}</span>
     `

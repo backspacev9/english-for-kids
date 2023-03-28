@@ -1,16 +1,17 @@
 export const FilePath = {
-  starWin: "./img/star-win.svg",
-  starLoose: "./img/star.svg",
-  repeatBtn: "./img/repeat.svg",
-  failEnd: "./img/failure.jpg",
-  successEnd: "./img/success.jpg",
   rightAnswer: "./audio/correct.mp3",
   wrongAnswer: "./audio/error.mp3",
   failSound: "./audio/failure.mp3",
   succesSound: "./audio/success.mp3",
 };
-export const pathIcons = {
-  noImage: "./img/no-pictures.png",
+export const IconsPath = {
+  noImage: "./icons/no-pictures.png",
+  starWin: "./icons/star-win.svg",
+  starLoose: "./icons/star.svg",
+  repeatBtn: "./icons/repeat.svg",
+  failEnd: "./icons/failure.jpg",
+  successEnd: "./icons/success.jpg",
+  loading: "./icons/loading.svg",
 };
 //export const baseUrl = "http://127.0.0.1:3000/";
 export const baseUrl = "https://efk-api.onrender.com/";
@@ -23,6 +24,8 @@ export const routPath = {
   videos: "uploads/vidios",
   uploads: "uploads",
 };
+
+export const RepositoryPathname = "/english-for-kids/";
 
 export const statusGame = {
   gameMode: "train",

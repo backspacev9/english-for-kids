@@ -2,7 +2,7 @@ import {Base} from "../base";
 import "./rootContainer.scss";
 import {HandleAsideClose} from "../../functions/handleAsideClose";
 import {adminMain, header, main} from "../..";
-import {FilePath, statusGame, currenPage, pages} from "../../constants";
+import {IconsPath, statusGame, currenPage, pages} from "../../constants";
 
 export class RootContainer extends Base {
   private ratingContainer = new Base("div", ["ratingContainer"]);
@@ -39,11 +39,11 @@ export class RootContainer extends Base {
   addStar(isRight: boolean) {
     if (isRight) {
       let rStar = new Base("img", ["rightStar"]);
-      rStar.element.setAttribute("src", FilePath.starWin);
+      rStar.element.setAttribute("src", IconsPath.starWin);
       this.ratingContainer.element.appendChild(rStar.element);
     } else {
       let wStar = new Base("img", ["wrongStar"]);
-      wStar.element.setAttribute("src", FilePath.starLoose);
+      wStar.element.setAttribute("src", IconsPath.starLoose);
       this.ratingContainer.element.appendChild(wStar.element);
     }
   }
@@ -69,7 +69,7 @@ export class RootContainer extends Base {
     if (statusGame.isGame) {
       this.btnStartGame.element.insertAdjacentHTML(
         "afterbegin",
-        `<img src="${FilePath.repeatBtn}">`
+        `<img src="${IconsPath.repeatBtn}">`
       );
     } else {
       this.btnStartGame.element.innerText = `start`;
