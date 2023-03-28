@@ -7,7 +7,7 @@ class NotFoundPage extends Base {
     super("div", ["Page-NotFound"]);
     this.textEl = new Base("span", [], text);
     this.btnBackToMain = new Base("a", [], "Back to Main Page");
-    this.btnBackToMain.element.setAttribute("href", "/");
+    this.btnBackToMain.element.setAttribute("href", "./");
 
     this.element.append(this.textEl.element, this.btnBackToMain.element);
   }

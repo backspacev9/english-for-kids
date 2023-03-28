@@ -9,7 +9,7 @@ import {modalLogin, modalWindow, rootContainer, server} from "../..";
 
 export class Aside extends Base {
   private containerMenu = new Base("ul", ["containerMenu"]);
-  private btnItemMenu = new ItemMenu("Main Page", "/#");
+  private btnItemMenu = new ItemMenu("Main Page", "./#");
   private btnStatistics = new ItemMenu("Statistics", "#statistics");
   private btnLogin = new Base("button", ["btnItemLogin"], "Login");
   private cardsArray: ItemMenu[] = [];
