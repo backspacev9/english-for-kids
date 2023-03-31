@@ -7,3 +7,6 @@ export interface strorageItems {
   wrong?: number;
   percent?: number;
 }
+export interface IState {
+  isGame: boolean;
+}

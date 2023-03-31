@@ -24,22 +24,22 @@ export class CardsPage extends Base {
     //   }
     // });
     this.addCards();
-    header.inputSwitcher.addEventListener("input", (e) => {
-      header.statusSwitcher.element.innerHTML = "";
-      if (header.inputSwitcher.checked) {
-        header.statusSwitcher.element.classList.remove("statusActive");
-        header.statusSwitcher.element.innerText = "train";
-        statusGame.gameMode = "train";
-      } else {
-        header.statusSwitcher.element.classList.add("statusActive");
-        header.statusSwitcher.element.innerText = "play";
-        statusGame.gameMode = "play";
-      }
-      // catPage.changeState();
-      //router.navigateTo("/");
-      this.gameModOn();
-      rootContainer.updateBtnStart();
-    });
+    // header.inputSwitcher.addEventListener("input", (e) => {
+    //   header.statusSwitcher.element.innerHTML = "";
+    //   if (header.inputSwitcher.checked) {
+    //     header.statusSwitcher.element.classList.remove("statusActive");
+    //     header.statusSwitcher.element.innerText = "train";
+    //     statusGame.gameMode = "train";
+    //   } else {
+    //     header.statusSwitcher.element.classList.add("statusActive");
+    //     header.statusSwitcher.element.innerText = "play";
+    //     statusGame.gameMode = "play";
+    //   }
+    //   // catPage.changeState();
+    //   //router.navigateTo("/");
+    //   this.gameModOn();
+    //   rootContainer.updateBtnStart();
+    // });
     this.element.addEventListener("mouseover", (e: Event) => {
       let target = <HTMLElement>e.target;
       if (target.classList.contains("cardField")) {

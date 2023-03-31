@@ -25,6 +25,7 @@ export const routPath = {
   uploads: "uploads",
 };
 
+//this path was made for correct routing on ghpages
 export const RepositoryPathname = "/english-for-kids/";
 
 export const statusGame = {

@@ -1,7 +1,6 @@
-import {lsHadle} from "../../..";
 import {sortAsc} from "../../../functions/sortAsc";
 import {sortDesc} from "../../../functions/sortDesc";
-import {strorageItems} from "../../../interface/strorageItems";
+import {strorageItems} from "../../../interfaces";
 import {Base} from "../../base";
 import {StatisticItem} from "./statisticsItem";
 import "./statisticsPage.scss";
@@ -42,7 +41,7 @@ export class StatisticsPage extends Base {
     await this.addStatistic();
 
     this.btnReset.element.addEventListener("click", () => {
-      lsHadle.initLocalStorage();
+      // lsHadle.initLocalStorage();
       this.addStatistic();
     });
 
@@ -72,10 +71,10 @@ export class StatisticsPage extends Base {
     this.tableBody.element.innerHTML = "";
     this.tableBody.element.append(this.headerTable.element);
     let allObjects: strorageItems[] = [];
-    let allWords = await lsHadle.getAllWords();
-    allWords.forEach((el) => {
-      allObjects.push(lsHadle.getObject(el));
-    });
+    //  let allWords = await lsHadle.getAllWords();
+    // allWords.forEach((el) => {
+    //   allObjects.push(lsHadle.getObject(el));
+    // });
 
     if (sort) {
       if (sort === "asc") {
@@ -87,7 +86,7 @@ export class StatisticsPage extends Base {
     }
 
     allObjects.forEach((obj: strorageItems) => {
-      this.tableBody.element.appendChild(new StatisticItem(obj).element);
+      this.tableBody.element.appendChild(new StatisticItem().element);
     });
   }
 }

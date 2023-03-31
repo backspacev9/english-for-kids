@@ -1,9 +1,9 @@
 import {delay} from "../../../functions/delay";
 import {Base} from "../../base";
 
-import {strorageItems} from "../../../interface/strorageItems";
+import {strorageItems} from "../../../interfaces";
 import {ICard} from "../../../interface/cards";
-import {lsHadle, audio} from "../../..";
+import {audio} from "../../..";
 import {statusGame} from "../../../constants";
 import {CardsPage} from "./cardsPage";
 
@@ -56,7 +56,7 @@ export class CardElement extends Base {
       if (statusGame.gameMode === "train" && target.classList.contains("frontside")) {
         this.playAudio(this.card.audiosrc);
 
-        lsHadle.updateLocal(this.card.word, 1);
+        // lsHadle.updateLocal(this.card.word, 1);
       }
     });
   }

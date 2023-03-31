@@ -3,7 +3,7 @@ import {Base} from "../base";
 import "./header.scss";
 import {setAttributes} from "../../functions/setAttributes";
 import {categoryCardElement} from "../pages/categoryPage/categoryCardElement";
-import {aside, rootContainer} from "../..";
+import {aside, rootContainer, stateLS} from "../..";
 import {statusGame} from "../../constants";
 //import {router} from "../router";
 
@@ -39,5 +39,30 @@ export class Header extends Base {
       aside.element.classList.toggle("activeAside");
       this.menuBtn.element.classList.toggle("closeMenu");
     });
+
+    this.inputSwitcher.addEventListener("input", (e) => {
+      if (!this.inputSwitcher.checked) {
+        stateLS.setState({isGame: false});
+      } else {
+        stateLS.setState({isGame: true});
+      }
+    });
+    this.updateGameMode();
+  }
+
+  updateGameMode() {
+    const gameStatus = stateLS.getState().isGame;
+    this.statusSwitcher.element.innerHTML = "";
+    console.log(gameStatus);
+
+    if (gameStatus) {
+      if (!this.inputSwitcher.checked) this.inputSwitcher.checked = true;
+      //this.statusSwitcher.element.classList.remove("statusActive");
+      this.statusSwitcher.element.innerHTML = "play";
+    } else {
+      if (this.inputSwitcher.checked) this.inputSwitcher.checked = false;
+      // this.statusSwitcher.element.classList.add("statusActive");
+      this.statusSwitcher.element.innerHTML = "train";
+    }
   }
 }

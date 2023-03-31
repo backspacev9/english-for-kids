@@ -1,5 +1,4 @@
-import { strorageItems } from "../../../interface/strorageItems";
-import { Base } from "../../base";
+import {Base} from "../../base";
 
 export class StatisticItem extends Base {
   private fieldWord: Base;
@@ -9,15 +8,15 @@ export class StatisticItem extends Base {
   private fieldCorrect: Base;
   private fieldWrong: Base;
   private fieldErrors: Base;
-  constructor(items: strorageItems) {
+  constructor() {
     super("tr", ["statisticItem"]);
-    this.fieldWord = new Base("td", [], items.word);
-    this.fieldTraslation = new Base("td", [], items.translation);
-    this.fieldCategory = new Base("td", [], items.category);
-    this.fieldClicks = new Base("td", [], items.clicks.toString());
-    this.fieldCorrect = new Base("td", [], items.correct.toString());
-    this.fieldWrong = new Base("td", [], items.wrong.toString());
-    this.fieldErrors = new Base("td", [], items.percent.toString());
+    // this.fieldWord = new Base("td", [], items.word);
+    // this.fieldTraslation = new Base("td", [], items.translation);
+    // this.fieldCategory = new Base("td", [], items.category);
+    // this.fieldClicks = new Base("td", [], items.clicks.toString());
+    // this.fieldCorrect = new Base("td", [], items.correct.toString());
+    // this.fieldWrong = new Base("td", [], items.wrong.toString());
+    // this.fieldErrors = new Base("td", [], items.percent.toString());
     this.element.append(
       this.fieldWord.element,
       this.fieldTraslation.element,
