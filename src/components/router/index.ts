@@ -1,4 +1,4 @@
-import {main, stateLS} from "../..";
+import {header, main, stateLS} from "../..";
 import {RepositoryPathname} from "../../constants";
 import {CardsPage} from "../pages/cardsPage/cardsPage";
 import {CategoryPage} from "../pages/categoryPage/categoryPage";
@@ -26,7 +26,13 @@ const handleLocation = async () => {
       ? routes["/"]
       : routes[404];
   main.insertPage(route);
-  stateLS.setState({isGame: false});
+  if (locationPath === "category") {
+    header.hideSwitcher(false);
+  } else header.hideSwitcher(true);
+  stateLS.setState({
+    isGameMode: false,
+    isGameNow: stateLS.getState().isGameNow,
+  });
 };
 
 const getParamsId = () =>

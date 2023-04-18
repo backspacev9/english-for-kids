@@ -1,6 +1,6 @@
-import {strorageItems} from "../interfaces";
+import {storageItems} from "../interfaces";
 
-export function sortDesc(arrObj: strorageItems[], field: string) {
+export function sortDesc(arrObj: storageItems[], field: string) {
   switch (field) {
     case "Word":
       return arrObj.sort((a, b) => (a.word < b.word ? 1 : a.word > b.word ? -1 : 0));

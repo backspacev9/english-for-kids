@@ -7,6 +7,16 @@ header {
   align-items: center;
   justify-content: space-between;
   padding: 0 10px;
+
+  .btn-StartRepeat {
+    display: flex;
+    height: 80%;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .btn-StartRepeat:hover {
+    transform: scale(1.08);
+  }
 }
 
 .menuBtn {

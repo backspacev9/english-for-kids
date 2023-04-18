@@ -1,6 +1,6 @@
 import {sortAsc} from "../../../functions/sortAsc";
 import {sortDesc} from "../../../functions/sortDesc";
-import {strorageItems} from "../../../interfaces";
+import {storageItems} from "../../../interfaces";
 import {Base} from "../../base";
 import {StatisticItem} from "./statisticsItem";
 import "./statisticsPage.scss";
@@ -70,7 +70,7 @@ export class StatisticsPage extends Base {
   async addStatistic(sort?: string, sortField?: string) {
     this.tableBody.element.innerHTML = "";
     this.tableBody.element.append(this.headerTable.element);
-    let allObjects: strorageItems[] = [];
+    let allObjects: storageItems[] = [];
     //  let allWords = await lsHadle.getAllWords();
     // allWords.forEach((el) => {
     //   allObjects.push(lsHadle.getObject(el));
@@ -85,7 +85,7 @@ export class StatisticsPage extends Base {
       }
     }
 
-    allObjects.forEach((obj: strorageItems) => {
+    allObjects.forEach((obj: storageItems) => {
       this.tableBody.element.appendChild(new StatisticItem().element);
     });
   }

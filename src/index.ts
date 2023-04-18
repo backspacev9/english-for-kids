@@ -30,6 +30,7 @@ export const main = new Main();
 
 export const stateLS = new StateLocalStorage();
 export const header = new Header();
+
 export const rootContainer = new RootContainer();
 export const aside = new Aside();
 
@@ -41,15 +42,14 @@ export const winWindow = new WinningWindow();
 export const modalLogin = new ModalLogin();
 export const state = new StateLocalStorage();
 
-window.onload = () => {
-  document.body.append(aside.element, rootContainer.element);
+// window.onload = () => {
 
-  // window.addEventListener("storage", (ev) => {
-  //   header.updateGameMode();
-  // });
-  window.onstorage = () => header.updateGameMode();
+// };
+document.body.append(aside.element, rootContainer.element);
+window.onstorage = () => {
+  rootContainer.updateBtnStart();
 };
 
-window.onhashchange = handleLocation;
-
+window.onhashchange = () => handleLocation();
 handleLocation();
+

@@ -1,5 +1,6 @@
 import {routPath, baseUrl} from "./constants";
 import {ICategory} from "./interface/category";
+import {ICard} from "./interfaces";
 export class Server {
   constructor() {}
 
@@ -18,6 +19,12 @@ export class Server {
     let data = await response.json();
     //let totalItems = data.length;
     //console.log({ data, totalItems });
+    return data;
+  }
+
+  async getCards() {
+    let response = await fetch(`${baseUrl}${routPath.cards}`);
+    let data: ICard[] = await response.json();
     return data;
   }
 

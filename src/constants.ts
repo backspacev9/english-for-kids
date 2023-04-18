@@ -1,3 +1,5 @@
+import {IStateGame} from "./interfaces";
+
 export const FilePath = {
   rightAnswer: "./audio/correct.mp3",
   wrongAnswer: "./audio/error.mp3",
@@ -9,6 +11,7 @@ export const IconsPath = {
   starWin: "./icons/star-win.svg",
   starLoose: "./icons/star.svg",
   repeatBtn: "./icons/repeat.svg",
+  startBtn: "./icons/start.svg",
   failEnd: "./icons/failure.jpg",
   successEnd: "./icons/success.jpg",
   loading: "./icons/loading.svg",
@@ -28,9 +31,10 @@ export const routPath = {
 //this path was made for correct routing on ghpages
 export const RepositoryPathname = "/english-for-kids/";
 
-export const statusGame = {
-  gameMode: "train",
-  isGame: false,
+export const statusGame: IStateGame = {
+  isGameMode: false,
+  isGameNow: false,
+  currentCards: [],
 };
 export const pages = {
   main: "Main Page",

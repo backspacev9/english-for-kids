@@ -1,9 +1,8 @@
 import {delay} from "../../../functions/delay";
 import {Base} from "../../base";
 
-import {strorageItems} from "../../../interfaces";
-import {ICard} from "../../../interface/cards";
-import {audio} from "../../..";
+import {ICard} from "../../../interfaces";
+import {audio, stateLS} from "../../..";
 import {statusGame} from "../../../constants";
 import {CardsPage} from "./cardsPage";
 
@@ -16,15 +15,8 @@ export class CardElement extends Base {
 
   constructor(card: ICard) {
     super("div", ["cardContainer"]);
-    const {id, word, translation, imagesrc, audiosrc, category_id} = card;
-    this.card = {
-      id: id,
-      word: word,
-      translation: translation,
-      imagesrc: imagesrc,
-      audiosrc: audiosrc,
-      category_id: category_id,
-    };
+
+    this.card = card;
     this.cardEl.element.insertAdjacentHTML(
       "afterbegin",
       `
@@ -53,18 +45,25 @@ export class CardElement extends Base {
 
     this.cardEl.element.addEventListener("click", (e: Event) => {
       let target = <HTMLElement>e.target;
-      if (statusGame.gameMode === "train" && target.classList.contains("frontside")) {
-        this.playAudio(this.card.audiosrc);
-
-        // lsHadle.updateLocal(this.card.word, 1);
+      const state = stateLS.getState();
+      if (target.classList.contains("frontside") && !state.isGameMode) {
+        let statCard = stateLS.getStatisticCard(this.card.id);
+        audio.currentTime = 0;
+        audio.src = `${this.card.audiosrc}`;
+        audio.play();
+        statCard = {...statCard, clicks: statCard.clicks + 1};
+        stateLS.updateStatisticCard(statCard);
       }
     });
   }
-
+  getCard() {
+    return this.card;
+  }
   hideFooter() {
+    const state = stateLS.getState();
     let footers = this.cardEl.element.querySelectorAll(".footerCard");
     footers.forEach((el) => {
-      if (statusGame.gameMode === "play") {
+      if (state.isGameMode) {
         el.classList.add("hideFooter");
         this.btnRotate.element.classList.add("hideFooter");
         this.cardEl.element.classList.add("playModCard");
@@ -91,9 +90,5 @@ export class CardElement extends Base {
     this.cardEl.element.classList.remove("rotated");
   }
 
-  playAudio(path: string) {
-    audio.currentTime = 0;
-    audio.src = `${path}`;
-    audio.play();
-  }
+  playAudio(path: string) {}
 }

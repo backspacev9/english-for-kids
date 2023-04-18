@@ -1,88 +1,88 @@
 .cardField {
-    display: flex;
-    padding: 0 30px;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
+  display: flex;
+  padding: 0 30px;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .cardContainer {
-    perspective: 800px;
-    margin-block: 15px;
-    margin-inline: 15px;
-    transition: all 0.5s;
-    cursor: pointer;
+  perspective: 800px;
+  margin-block: 15px;
+  margin-inline: 15px;
+  transition: all 0.5s;
+  cursor: pointer;
 }
 
 .cardContainer:hover {
-    transform: scale(1.02);
+  transform: scale(1.02);
 }
 
 .disabled {
-    pointer-events: none;
-    filter: brightness(0.5);
+  pointer-events: none;
+  filter: brightness(0.5);
 }
 
 .card {
-    display: flex;
-    width: 300px;
-    height: 245px;
-    transform-style: preserve-3d;
-    transition: 0.5s;
-    -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
-    -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
-    box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.5);
+  display: flex;
+  width: 300px;
+  height: 245px;
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+  -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+  box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.5);
 }
 
 .playModCard {
-    height: 200px;
+  height: 200px;
 }
 
 .footerCard {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 40px;
-    font-size: 22px;
-    font-weight: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  font-size: 22px;
+  font-weight: normal;
 }
 
 .hideFooter {
-    display: none;
+  display: none;
 }
 
 .backside,
 .frontside {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    bottom: 0;
-    backface-visibility: hidden;
-    background-size: contain;
-    background-repeat: no-repeat;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  backface-visibility: hidden;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .backside {
-    //background-size: cover;
-    transform: rotateY(180deg);
+  //background-size: cover;
+  transform: rotateY(180deg);
 }
 
 .btnRotate {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    backface-visibility: hidden;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  backface-visibility: hidden;
 }
 
 .rotated {
-    transform: rotateY(180deg);
+  transform: rotateY(180deg);
 }
 
 .btnRotate svg {
-    width: 30px;
-    height: 30px;
+  width: 30px;
+  height: 30px;
 }

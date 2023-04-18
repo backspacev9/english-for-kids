@@ -1,5 +1,5 @@
 import {getCardsByCategoryName} from "../../../../functions/getCardsByName";
-import {ICard} from "../../../../interface/cards";
+import {ICard} from "../../../../interfaces";
 import {Base} from "../../../base";
 import "./wordAdmin.scss";
 import {WordAdminCard} from "./wordAdminCard";

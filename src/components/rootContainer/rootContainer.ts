@@ -1,12 +1,16 @@
 import {Base} from "../base";
 import "./rootContainer.scss";
-import {HandleAsideClose} from "../../functions/handleAsideClose";
-import {adminMain, header, main} from "../..";
+
+import {adminMain, game, header, main, stateLS} from "../..";
 import {IconsPath, statusGame, currenPage, pages} from "../../constants";
+import {IStateGame} from "../../interfaces";
 
 export class RootContainer extends Base {
   private ratingContainer = new Base("div", ["ratingContainer"]);
   btnStartGame = new Base("div", ["btnStartGame"]);
+
+  private gameState: IStateGame = null;
+
   constructor() {
     super("div", ["rootContainer"]);
     if (localStorage.getItem("isLoggedIn") === "false") {
@@ -14,14 +18,22 @@ export class RootContainer extends Base {
     } else {
       this.initAdmin();
     }
+
+    this.btnStartGame.element.onclick = () => {
+      if (!this.gameState.isGameNow) {
+        game.startGame(statusGame.currentCards);
+      } else {
+        game.playAudio();
+      }
+    };
   }
 
   initElements() {
-    localStorage.setItem("isLoggedIn", "false");
+    // localStorage.setItem("isLoggedIn", "false");
     this.clearPage();
     this.element.classList.remove("rootAdminActive");
     this.updateBtnStart();
-    HandleAsideClose();
+
     this.element.append(
       header.element,
       this.ratingContainer.element,
@@ -53,20 +65,24 @@ export class RootContainer extends Base {
   }
 
   updateBtnStart() {
-    // console.log(Constants.currenPage.page);
-    if (
-      statusGame.gameMode === "train" ||
-      currenPage.page === pages.main ||
-      currenPage.page === pages.statistics
-    ) {
+    this.gameState = stateLS.getState();
+    header.updateSwitcher();
+
+    const {isGameMode, isGameNow} = this.gameState;
+    statusGame.currentCards.forEach((el) => {
+      el.hideFooter();
+    });
+    if (!isGameMode) {
       this.btnStartGame.element.classList.add("hideElement");
       this.ratingContainer.element.classList.add("hideElement");
+
       return;
     }
+
     this.btnStartGame.element.classList.remove("hideElement");
     this.ratingContainer.element.classList.remove("hideElement");
     this.btnStartGame.element.innerHTML = ``;
-    if (statusGame.isGame) {
+    if (isGameNow) {
       this.btnStartGame.element.insertAdjacentHTML(
         "afterbegin",
         `<img src="${IconsPath.repeatBtn}">`

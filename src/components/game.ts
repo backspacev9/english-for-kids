@@ -1,54 +1,80 @@
-import {modalWindow, winWindow, rootContainer, audio} from "..";
+import {modalWindow, winWindow, rootContainer, audio, stateLS} from "..";
 import {statusGame, FilePath} from "../constants";
 import {delay} from "../functions/delay";
+import {ICard, storageItems} from "../interfaces";
 import {CardElement} from "./pages/cardsPage/cardElement";
+import router from "./router";
 //import {router} from "./router";
+interface ICardStatistic {
+  id: number;
+  word: string;
+  translation: string;
+  category: number;
+  clicks: number;
+  totalRight: number;
+  totalWrong: number;
+}
 
 export class Game {
   private audios: string[] = [];
   private isProgress = false;
-  private counter: number = 0;
+  private audioCounter: number = 0;
   private currentAudio: string = "";
-  private currentWord: string = "";
-  private arrCardsEl: CardElement[] = [];
-  totalRight: number = 0;
-  totalWrong: number = 0;
+  private statisticCards: storageItems[];
+  private totalRight: number = 0;
+  private totalWrong: number = 0;
+
   constructor() {}
 
   clearData() {
-    this.counter = 0;
+    this.audioCounter = 0;
     this.currentAudio = "";
     this.audios = [];
     this.isProgress = false;
-    this.totalRight = 0;
     this.totalWrong = 0;
+    this.totalRight = 0;
   }
 
   async startGame(cards: CardElement[]) {
-    //   statusGame.isGame = true;
-    //   this.clearData();
-    //   this.arrCardsEl = cards;
-    //   cards.forEach((el) => {
-    //     this.audios.push(el.audio);
-    //   });
-    //   this.audios.sort(() => Math.random() - 0.5);
-    //   this.playAudio();
-    //   cards.forEach((el) => {
-    //     el.element.addEventListener("click", async () => {
-    //       if (!this.isProgress) {
-    //         this.isProgress = true;
-    //         await this.checkCard(el);
-    //       }
-    //     });
-    //   });
+    const categoryName = cards[0].getCard().category;
+    this.statisticCards = stateLS.getStatisticCardsByCategory(categoryName);
+
+    stateLS.setState({
+      isGameMode: stateLS.getState().isGameMode,
+      isGameNow: true,
+    });
+    //  statusGame.isGameNow = stateLS.getState().isGameNow;
+    this.clearData();
+
+    cards.forEach((el) => {
+      const card = el.getCard();
+
+      this.audios.push(card.audiosrc);
+    });
+
+    this.audios.sort(() => Math.random() - 0.5);
+
+    this.playAudio();
+
+    cards.forEach((el) => {
+      el.element.addEventListener("click", async () => {
+        if (!this.isProgress) {
+          this.isProgress = true;
+
+          await this.checkCard(el);
+        }
+      });
+    });
   }
 
   endGame(isForceExit: boolean = false) {
-    statusGame.isGame = false;
+    stateLS.setState({
+      isGameMode: stateLS.getState().isGameMode,
+      isGameNow: false,
+    });
 
-    if (isForceExit == false) {
-      //main.insertPage(catPage.element);
-      //router.navigateTo("/");
+    // statusGame.isGameNow = stateLS.getState().isGameNow;
+    if (!isForceExit) {
       modalWindow.insertContent(winWindow.element);
       if (this.totalWrong > 0) {
         winWindow.showWinModal(this.totalWrong);
@@ -62,41 +88,44 @@ export class Game {
 
     rootContainer.clearRating();
     rootContainer.updateBtnStart();
-    // this.arrCards.forEach((el) => {
+
+    // this.arrCards.forEach((el) => { //##server side
     //   lsHadle.setPercent(el.word);
     // });
   }
 
-  // private async checkCard(card: CardElement): Promise<void> {
-  //   return new Promise<void>(async (resolve) => {
-  //     this.currentWord = card.word;
-  //     if (card.audio === this.currentAudio) {
-  //       this.playAudio(path.rightAnswer);
-  //       card.element.classList.add("disabled");
-  //       rootContainer.addStar(true);
-  //       lsHadle.updateLocal(card.word, 0, answerScore, 0);
-  //       this.totalRight++;
-  //       this.counter++;
-  //       await delay(1000);
-  //       if (this.counter <= this.audios.length - 1) {
-  //         this.playAudio();
-  //       } else {
-  //         this.endGame();
-  //       }
-  //     } else {
-  //       this.totalWrong++;
-  //       this.playAudio(path.wrongAnswer);
-  //       rootContainer.addStar(false);
-  //       lsHadle.updateLocal(card.word, 0, 0, answerScore);
-  //     }
-  //     resolve();
-  //     this.isProgress = false;
-  //   });
-  // }
+  private async checkCard(cardEl: CardElement): Promise<void> {
+    return new Promise<void>(async (resolve) => {
+      const card = cardEl.getCard();
 
-  async playAudio(src?: string) {
+      //this.currentWord = card.word;
+      if (card.audiosrc === this.currentAudio) {
+        this.playAudio(FilePath.rightAnswer);
+        cardEl.element.classList.add("disabled");
+        rootContainer.addStar(true);
+        this.audioCounter++;
+
+        this.totalRight++;
+        await delay(1000);
+        if (this.audioCounter <= this.audios.length - 1) {
+          this.playAudio();
+        } else {
+          this.endGame();
+        }
+      } else {
+        this.totalWrong++;
+        this.playAudio(FilePath.wrongAnswer);
+        rootContainer.addStar(false);
+        //  lsHadle.updateLocal(card.word, 0, 0, answerScore);
+      }
+      resolve();
+      this.isProgress = false;
+    });
+  }
+
+  playAudio(src?: string) {
     audio.currentTime = 0;
-    this.currentAudio = this.audios[this.counter];
+    this.currentAudio = this.audios[this.audioCounter];
     if (src) {
       audio.src = src;
     } else {
