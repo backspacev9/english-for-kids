@@ -61,6 +61,20 @@ export class StateLocalStorage {
     });
     this.setStatistics(newCards);
   }
+  updateStatCards(cardsArr: storageItems[]) {
+    const cards = this.getStatistics();
+    let inputCards = cardsArr.map((item) => {
+      if (item.correct != 0 || item.wrong != 0) {
+        item.percent = Number(((item.correct / (item.correct + item.wrong)) * 100).toFixed(2));
+        return item;
+      }
+    });
+    for (let i = 0; i < cards.length; i++) {
+      if (cards[i].id === inputCards[i].id) {
+        this.updateStatisticCard(inputCards[i]);
+      }
+    }
+  }
   setStatistics(data: storageItems[]) {
     localStorage.setItem(lsNames.statistics, JSON.stringify(data));
   }

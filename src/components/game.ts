@@ -84,6 +84,7 @@ export class Game {
         this.playAudio(FilePath.succesSound);
       }
       rootContainer.element.append(modalWindow.element);
+      stateLS.updateStatCards(this.statisticCards);
     }
 
     rootContainer.clearRating();
@@ -104,8 +105,11 @@ export class Game {
         cardEl.element.classList.add("disabled");
         rootContainer.addStar(true);
         this.audioCounter++;
-
         this.totalRight++;
+        this.statisticCards = this.statisticCards.map((c) => {
+          if (c.id === card.id) c.correct += 1;
+          return c;
+        });
         await delay(1000);
         if (this.audioCounter <= this.audios.length - 1) {
           this.playAudio();
@@ -116,7 +120,10 @@ export class Game {
         this.totalWrong++;
         this.playAudio(FilePath.wrongAnswer);
         rootContainer.addStar(false);
-        //  lsHadle.updateLocal(card.word, 0, 0, answerScore);
+        this.statisticCards = this.statisticCards.map((c) => {
+          if (c.id === card.id) c.wrong += 1;
+          return c;
+        });
       }
       resolve();
       this.isProgress = false;
