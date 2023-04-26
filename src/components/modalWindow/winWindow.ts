@@ -24,7 +24,7 @@ export class WinningWindow extends Base {
     this.element.append(err.element, img.element);
     await delay(DELAY_OF_MODAL);
     modalWindow.close();
-    window.location.href = "/";
+    //window.location.href = "/";
 
     aside.updateList();
     rootContainer.updateBtnStart();

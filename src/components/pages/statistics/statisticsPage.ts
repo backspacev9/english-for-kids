@@ -1,5 +1,5 @@
-import {sortAsc} from "../../../functions/sortAsc";
-import {sortDesc} from "../../../functions/sortDesc";
+import {stateLS} from "../../..";
+import {sortDesc, sortAsc} from "./statisticsSort";
 import {storageItems} from "../../../interfaces";
 import {Base} from "../../base";
 import {StatisticItem} from "./statisticsItem";
@@ -18,6 +18,7 @@ export class StatisticsPage extends Base {
   private thErrors = new Base("th", ["thErrors"], "Errors(%)");
 
   private btnReset = new Base("button", ["btnReset"], "Reset");
+  private btnRefresh = new Base("button", ["btnRefresh"], "Refresh");
   private arrayOfTh: Base[] = [
     this.thWord,
     this.thTranslation,
@@ -37,11 +38,14 @@ export class StatisticsPage extends Base {
     });
     this.tableBody.element.append(this.headerTable.element);
     this.table.element.append(this.tableBody.element);
-    this.element.append(this.btnReset.element, this.table.element);
+    this.element.append(this.btnReset.element, this.btnRefresh.element, this.table.element);
     await this.addStatistic();
 
-    this.btnReset.element.addEventListener("click", () => {
-      // lsHadle.initLocalStorage();
+    this.btnReset.element.addEventListener("click", async () => {
+      await stateLS.initStatistics();
+      this.addStatistic();
+    });
+    this.btnRefresh.element.addEventListener("click", async () => {
       this.addStatistic();
     });
 
@@ -70,11 +74,7 @@ export class StatisticsPage extends Base {
   async addStatistic(sort?: string, sortField?: string) {
     this.tableBody.element.innerHTML = "";
     this.tableBody.element.append(this.headerTable.element);
-    let allObjects: storageItems[] = [];
-    //  let allWords = await lsHadle.getAllWords();
-    // allWords.forEach((el) => {
-    //   allObjects.push(lsHadle.getObject(el));
-    // });
+    let allObjects: storageItems[] = stateLS.getStatistics();
 
     if (sort) {
       if (sort === "asc") {
@@ -86,7 +86,7 @@ export class StatisticsPage extends Base {
     }
 
     allObjects.forEach((obj: storageItems) => {
-      this.tableBody.element.appendChild(new StatisticItem().element);
+      this.tableBody.element.appendChild(new StatisticItem(obj).element);
     });
   }
 }

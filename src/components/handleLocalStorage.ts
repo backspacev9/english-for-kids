@@ -5,6 +5,7 @@ const lsNames = {
   statistics: "statistics",
 };
 export class StateLocalStorage {
+  private storageCards: storageItems[] = [];
   constructor() {
     this.setState({isGameMode: false, isGameNow: false, currentCards: []});
     if (!localStorage.getItem(lsNames.statistics)) {
@@ -23,12 +24,19 @@ export class StateLocalStorage {
     const data: IStateGame = JSON.parse(value);
     return data;
   }
+  async refreshData() {
+    const cards = await server.getCards();
+    for (let i = 0; i < cards.length; i++) {
+      if (this.storageCards[i].id === cards[i].id) {
+      }
+    }
+  }
 
   async initStatistics() {
     const cards = await server.getCards();
-    const storageCards: storageItems[] = [];
+
     cards.forEach((el) => {
-      storageCards.push({
+      this.storageCards.push({
         id: el.id,
         word: el.word,
         translation: el.translation,
@@ -39,7 +47,7 @@ export class StateLocalStorage {
         percent: 0,
       });
     });
-    this.setStatistics(storageCards);
+    this.setStatistics(this.storageCards);
   }
 
   getStatisticCard(idCard: number) {
@@ -62,17 +70,8 @@ export class StateLocalStorage {
     this.setStatistics(newCards);
   }
   updateStatCards(cardsArr: storageItems[]) {
-    const cards = this.getStatistics();
-    let inputCards = cardsArr.map((item) => {
-      if (item.correct != 0 || item.wrong != 0) {
-        item.percent = Number(((item.correct / (item.correct + item.wrong)) * 100).toFixed(2));
-        return item;
-      }
-    });
-    for (let i = 0; i < cards.length; i++) {
-      if (cards[i].id === inputCards[i].id) {
-        this.updateStatisticCard(inputCards[i]);
-      }
+    for (let i = 0; i < cardsArr.length; i++) {
+      this.updateStatisticCard(cardsArr[i]);
     }
   }
   setStatistics(data: storageItems[]) {

@@ -84,6 +84,7 @@ export class Game {
         this.playAudio(FilePath.succesSound);
       }
       rootContainer.element.append(modalWindow.element);
+
       stateLS.updateStatCards(this.statisticCards);
     }
 

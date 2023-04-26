@@ -16,7 +16,8 @@ export class RootContainer extends Base {
     if (localStorage.getItem("isLoggedIn") === "false") {
       this.initElements();
     } else {
-      this.initAdmin();
+      //  this.initAdmin();
+      this.initElements();
     }
 
     this.btnStartGame.element.onclick = () => {

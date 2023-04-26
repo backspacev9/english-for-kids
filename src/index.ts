@@ -42,14 +42,18 @@ export const winWindow = new WinningWindow();
 export const modalLogin = new ModalLogin();
 export const state = new StateLocalStorage();
 
-// window.onload = () => {
-
-// };
+const upServer = () => {
+  const timeToUpMinutes = 14; //interval in minutes
+  const seconds = timeToUpMinutes * 60;
+  setInterval(() => {
+    server.getCards();
+  }, seconds);
+};
 document.body.append(aside.element, rootContainer.element);
 window.onstorage = () => {
   rootContainer.updateBtnStart();
+  upServer();
 };
 
 window.onhashchange = () => handleLocation();
 handleLocation();
-

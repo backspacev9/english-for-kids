@@ -1,3 +1,4 @@
+import {storageItems} from "../../../interfaces";
 import {Base} from "../../base";
 
 export class StatisticItem extends Base {
@@ -8,15 +9,16 @@ export class StatisticItem extends Base {
   private fieldCorrect: Base;
   private fieldWrong: Base;
   private fieldErrors: Base;
-  constructor() {
+  constructor(items: storageItems) {
     super("tr", ["statisticItem"]);
-    // this.fieldWord = new Base("td", [], items.word);
-    // this.fieldTraslation = new Base("td", [], items.translation);
-    // this.fieldCategory = new Base("td", [], items.category);
-    // this.fieldClicks = new Base("td", [], items.clicks.toString());
-    // this.fieldCorrect = new Base("td", [], items.correct.toString());
-    // this.fieldWrong = new Base("td", [], items.wrong.toString());
-    // this.fieldErrors = new Base("td", [], items.percent.toString());
+
+    this.fieldWord = new Base("td", [], items.word);
+    this.fieldTraslation = new Base("td", [], items.translation);
+    this.fieldCategory = new Base("td", [], items.category);
+    this.fieldClicks = new Base("td", [], items.clicks.toString());
+    this.fieldCorrect = new Base("td", [], items.correct.toString());
+    this.fieldWrong = new Base("td", [], items.wrong.toString());
+    this.fieldErrors = new Base("td", [], this.calcPercent(items.correct, items.wrong).toString());
     this.element.append(
       this.fieldWord.element,
       this.fieldTraslation.element,
@@ -26,5 +28,10 @@ export class StatisticItem extends Base {
       this.fieldWrong.element,
       this.fieldErrors.element
     );
+  }
+  private calcPercent(correct: number, wrong: number) {
+    return correct != 0 || wrong != 0
+      ? Number(((correct / (correct + wrong)) * 100).toFixed(2))
+      : 0;
   }
 }
