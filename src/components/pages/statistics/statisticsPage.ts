@@ -18,7 +18,6 @@ export class StatisticsPage extends Base {
   private thErrors = new Base("th", ["thErrors"], "Errors(%)");
 
   private btnReset = new Base("button", ["btnReset"], "Reset");
-  private btnRefresh = new Base("button", ["btnRefresh"], "Refresh");
   private arrayOfTh: Base[] = [
     this.thWord,
     this.thTranslation,
@@ -38,14 +37,11 @@ export class StatisticsPage extends Base {
     });
     this.tableBody.element.append(this.headerTable.element);
     this.table.element.append(this.tableBody.element);
-    this.element.append(this.btnReset.element, this.btnRefresh.element, this.table.element);
+    this.element.append(this.btnReset.element, this.table.element);
     await this.addStatistic();
 
     this.btnReset.element.addEventListener("click", async () => {
       await stateLS.initStatistics();
-      this.addStatistic();
-    });
-    this.btnRefresh.element.addEventListener("click", async () => {
       this.addStatistic();
     });
 

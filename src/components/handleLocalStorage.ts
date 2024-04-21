@@ -24,13 +24,6 @@ export class StateLocalStorage {
     const data: IStateGame = JSON.parse(value);
     return data;
   }
-  async refreshData() {
-    const cards = await server.getCards();
-    for (let i = 0; i < cards.length; i++) {
-      if (this.storageCards[i].id === cards[i].id) {
-      }
-    }
-  }
 
   async initStatistics() {
     const cards = await server.getCards();
